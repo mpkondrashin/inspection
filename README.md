@@ -74,8 +74,9 @@ $./inspection status
 
 ## Errors
 
-| Unauthorized                                                | Wrong CloudOne API key or wrong CloudOne region                             |
+| Error message                                               | Possible Cause                                                              |
 |-------------------------------------------------------------|-----------------------------------------------------------------------------|
+| Unauthorized                                                | Wrong CloudOne API key or wrong CloudOne region                             |
 | This request is invalid                                     | Wrong format for CloudOne account or AWS Region                             |
 | Forbidden                                                   | Wrong CloudOne account                                                      |
 | Data not found                                              | Wrong AWS Region                                                            |
