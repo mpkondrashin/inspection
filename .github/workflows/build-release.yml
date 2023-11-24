@@ -1,0 +1,61 @@
+name: Go
+on: [push]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+
+    - name: Check Go version
+      run: go version
+
+    - name: Build Inspection for Windows
+      run: GOOS=windows GOARCH=amd64 go build 
+      
+    - name: Pack for Windows
+      uses: montudor/action-zip@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        args: zip -j "inspection_win64_${{ github.ref_name }}.zip" inspection.exe  README.md config_example.yaml
+
+    - name: Build Inspection for Linux
+      run: GOOS=linux GOARCH=amd64 go build
+        
+    - name: Pack for Linux
+      uses: montudor/action-zip@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        args: zip -j "inspection_linux64_${{ github.ref_name }}.zip" inspection README.md config_example.yaml
+          
+    - name: Build Inspection for macOS Intel
+      run: GOOS=darwin GOARCH=amd64 go build
+
+    - name: Pack for macOS Intel
+      uses: montudor/action-zip@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        args: zip -j "inspection_macos_intel_${{ github.ref_name }}.zip" inspection README.md config_example.yaml
+            
+    - name: Build Inspection for macOS ARM
+      run: GOOS=darwin GOARCH=arm64 go build
+              
+    - name: Pack for macOS ARM
+      uses: montudor/action-zip@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        args: zip -j "inspection_macos_m_${{ github.ref_name }}.zip" aceninspection README.md config_example.yaml
+    
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: |
+          inspection_win64_${{ github.ref_name }}.zip
+          inspection_linux64_${{ github.ref_name }}.zip
+          inspection_macos_intel_${{ github.ref_name }}.zip
+          inspection_macos_m_${{ github.ref_name }}.zip

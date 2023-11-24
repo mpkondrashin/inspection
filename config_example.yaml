@@ -1,0 +1,4 @@
+api_key:    # CloudOne API key (On CloudOne console go to Administration->API Keys->New)
+region:     # CloudOne region (On CloudOne console go to Administration-Account Settings->Region)
+account_id: # CloudOne account ID (On CloudOne console go to Administration-Account Settings->ID)
+aws_region: # AWS region, i.e. us-east-1
