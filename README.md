@@ -4,12 +4,12 @@ Control Trend Micro Cloud One Network Security Hosted Infrastructure inspection
 
 For network issues diagnostic, it is very often needed to turn off IPS inspection. For Trend Micro Cloud One Network Security Hosted Infrastructure, this option is not available on the management console. Inspection offers this ability as a command line utility.
 
-### Usage 
+## Usage 
 1. Download [the latest release](https://github.com/mpkondrashin/inspection/releases/latest) of ```inspection``` executable for your platform.
 2. Copy ```config_example.yaml``` to ```config.yaml``` in the same directory as Inspection executable itself. Edit ```config.yaml``` and change fields to correct values. 
 3. Run ```inspection``` executable with one of following commands: status, on, off.
 
-### Configuration
+## Configuration
 Inspection offers the following ways to provide configuration parameters:
 1. Configuration file ```config.yaml```. Application seeks for this file in its current folder or folder of executable
 2. Environment variables
@@ -33,24 +33,24 @@ To set these parameters through the environment variable, add NS prefix. Example
 NS_API_KEY=tmc12YddE43ASdreseZYhJ5jWAWgaHwBn:5NosR4ed4sdRwe4wfgTYerpedqexms3D14XdqAd8Q5vjcc62irGPHG2weWnh
 ```
 
-### Output explained
+## Output explained
 
-## Turn Inspection Off
+### Turn Inspection Off
 ```commandline
 $./inspection off
 2023/11/24 21:35:29 Command: off
 2023/11/24 21:35:30 Done
 ```
-## Turn Inspection On
+### Turn Inspection On
 ```commandline
 $./inspection on
 2023/11/24 21:35:29 Command: on
 2023/11/24 21:35:30 Done
 ```
 
-## Status Command
+### Status Command
 
-# Inspection is on
+#### Inspection is on
 
 ```commandline
 $./inspection status
@@ -61,7 +61,7 @@ $./inspection status
 2023/11/24 21:32:19 Done
 ```
 
-# Inspection is off
+#### Inspection is off
 
 ```commandline
 $./inspection status
@@ -72,7 +72,7 @@ $./inspection status
 2023/11/24 21:36:42 Done
 ```
 
-# Errors
+## Errors
 
 | Unauthorized                                                | Wrong CloudOne API key or wrong CloudOne region                             |
 |-------------------------------------------------------------|-----------------------------------------------------------------------------|
