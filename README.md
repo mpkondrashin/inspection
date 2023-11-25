@@ -25,18 +25,18 @@ For correct AWS region value, go to Network Security -> Network -> Hosted Infras
 ![Cloud One console image](images/nshi.png?raw=true)
 and pick your AWS VPC:
 ![Cloud One console image](images/region.png?raw=true)
-Region value is Availability Zone without last character ("a" in this example)
+AWS Region value is Availability Zone without last character ("a" in this example)
 
 ### Get latest Inspection executable
 Download [the latest release](https://github.com/mpkondrashin/inspection/releases/latest) of ```inspection``` executable for your platform.
 
 ### Create Configuration File
-Copy ```config_example.yaml``` to ```config.yaml``` in the same directory as Inspection executable itself. Edit ```config.yaml``` and change fields to correct values. 
+Copy ```config_example.yaml``` to ```config.yaml``` in the same directory as Inspection executable itself. Edit ```config.yaml``` and change fields to values aquired on the previous steps. 
 
 ### Run Inspection Utility
 Run ```inspection``` executable with one of following commands: status, on, off.
 
-**Note:** Inspection executable is not signed application, so Operations System may warn you on this. In this case this warning can be ignored.
+**Note:** Inspection executable is not signed application, so operating system may warn you on this. In this case this warning can be ignored.
 
 ## Configuration
 Inspection offers the following ways to provide configuration parameters:
@@ -57,7 +57,7 @@ To set these parameters through the command line, for example, to set AWS Region
 inspection status --aws_region=us-east-1
 ```
 
-To set these parameters through the environment variable, add NS prefix. Example for the API Key:
+To set these parameters through the environment variable, add "NS_" prefix. Example for the API Key:
 ```commandline
 NS_API_KEY=tmc12YddE43ASdreseZYhJ5jWAWgaHwBn:5NosR4ed4sdRwe4wfgTYerpedqexms3D14XdqAd8Q5vjcc62irGPHG2weWnh
 ```
@@ -105,9 +105,9 @@ $./inspection status
 
 | Error message                                               | Possible Cause                                                              |
 |-------------------------------------------------------------|-----------------------------------------------------------------------------|
-| Unauthorized                                                | Wrong Cloud One API key or wrong Cloud One region                             |
-| This request is invalid                                     | Wrong format for Cloud One account or AWS Region                             |
-| Forbidden                                                   | Wrong Cloud One account                                                      |
+| Unauthorized                                                | Wrong Cloud One API key or Cloud One region                                 |
+| This request is invalid                                     | Wrong format of Cloud One account or AWS Region                             |
+| Forbidden                                                   | Wrong Cloud One account                                                     |
 | Data not found                                              | Wrong AWS Region                                                            |
 | HTTP request: Get "...": dial tcp: lookup ...: no such host | Nonexistent region or missing Internet connection                           |
-| Missing <option name>                                       | Given option is missing in config.yaml, environment, commandline            |
+| Missing ...                                                 | Given option is missing in config.yaml, environment, and commandline        |
