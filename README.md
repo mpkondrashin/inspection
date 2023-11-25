@@ -8,20 +8,21 @@ For network issues diagnostic, it is very often needed to turn off IPS inspectio
 
 ### Get required configuration parameters
 To use ```inspection``` you will need to get values of several parameters:
-1. CloudOne Region
-2. CloudOne Account ID
-3. CloudOne API Key
+1. Cloud One Region
+2. Cloud One Account ID
+3. Cloud One API Key
 4. AWS Region
 
-For CloudOne Region and Account ID open [cloudone console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
-![CloudOne console image](images/administration.png?raw=true)
+For Cloud One Region and Account ID open [Cloud One console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
+![Cloud One console image](images/administration.png?raw=true)
 
-For Cloud One API Key go to [API Keys](https://cloudone.trendmicro.com/administration/account-properties) and push new button:
-![CloudOne console image](images/apikeys.png?raw=true)
+For Cloud One API Key API Keys and push "New" button:
+![Cloud One console image](images/apikeys.png?raw=true)
  Choose Full Control if you need to change fallback mode and not only check its status:
+![Cloud One console image](images/newkey.png?raw=true)
 
 For correct AWS region value, go to [Netwrok Security](https://cloudone) and pick your AWS VPC:
-![CloudOne console image](images/region.png?raw=true)
+![Cloud One console image](images/region.png?raw=true)
 Region value is Availability Zone without last character ("a" in this example)
 
 ### Get latest Inspection executable
@@ -43,9 +44,9 @@ Inspection offers the following ways to provide configuration parameters:
 
 Full config file explained:
 ```yaml
-api_key:    # CloudOne API key (On CloudOne console go to Administration->API Keys->New)
-region:     # CloudOne region (On CloudOne console go to Administration-Account Settings->Region)
-account_id: # CloudOne account ID (On CloudOne console go to Administration-Account Settings->ID)
+api_key:    # Cloud One API key (On Cloud One console go to Administration->API Keys->New)
+region:     # Cloud One region (On Cloud One console go to Administration-Account Settings->Region)
+account_id: # Cloud One account ID (On Cloud One console go to Administration-Account Settings->ID)
 aws_region: # AWS region, i.e. us-east-1
 ```
 
@@ -102,9 +103,9 @@ $./inspection status
 
 | Error message                                               | Possible Cause                                                              |
 |-------------------------------------------------------------|-----------------------------------------------------------------------------|
-| Unauthorized                                                | Wrong CloudOne API key or wrong CloudOne region                             |
-| This request is invalid                                     | Wrong format for CloudOne account or AWS Region                             |
-| Forbidden                                                   | Wrong CloudOne account                                                      |
+| Unauthorized                                                | Wrong Cloud One API key or wrong Cloud One region                             |
+| This request is invalid                                     | Wrong format for Cloud One account or AWS Region                             |
+| Forbidden                                                   | Wrong Cloud One account                                                      |
 | Data not found                                              | Wrong AWS Region                                                            |
 | HTTP request: Get "...": dial tcp: lookup ...: no such host | Nonexistent region or missing Internet connection                           |
 | Missing <option name>                                       | Given option is missing in config.yaml, environment, commandline            |
