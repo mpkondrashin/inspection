@@ -62,15 +62,16 @@ To set these parameters through the environment variable, add "NS_" prefix. Exam
 NS_API_KEY=tmc12YddE43ASdreseZYhJ5jWAWgaHwBn:5NosR4ed4sdRwe4wfgTYerpedqexms3D14XdqAd8Q5vjcc62irGPHG2weWnh
 ```
 
-## Output explained
+## Inspection Utility Output Examples
 
-### Turn Inspection Off
+Turn Inspection Off:
 ```commandline
 $./inspection off
 2023/11/24 21:35:29 Command: off
 2023/11/24 21:35:30 Done
 ```
-### Turn Inspection On
+
+Turn Inspection On:
 ```commandline
 $./inspection on
 2023/11/24 21:35:29 Command: on
@@ -79,8 +80,7 @@ $./inspection on
 
 ### Status Command
 
-#### Inspection is on
-
+Inspection is on:
 ```commandline
 $./inspection status
 2023/11/24 21:32:18 Command: status
@@ -90,8 +90,7 @@ $./inspection status
 2023/11/24 21:32:19 Done
 ```
 
-#### Inspection is off
-
+Inspection is off:
 ```commandline
 $./inspection status
 2023/11/24 21:36:41 Command: status
