@@ -64,14 +64,14 @@ NS_API_KEY=tmc12YddE43ASdreseZYhJ5jWAWgaHwBn:5NosR4ed4sdRwe4wfgTYerpedqexms3D14X
 
 ## Inspection Utility Output Examples
 
-Turn Inspection Off:
+Turn inspection off:
 ```commandline
 $./inspection off
 2023/11/24 21:35:29 Command: off
 2023/11/24 21:35:30 Done
 ```
 
-Turn Inspection On:
+Turn inspection on:
 ```commandline
 $./inspection on
 2023/11/24 21:35:29 Command: on
