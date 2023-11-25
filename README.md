@@ -2,30 +2,30 @@
 
 Control Trend Micro Cloud One Network Security Hosted Infrastructure inspection on AWS.
 
-For network issues diagnostic, it is very often needed to turn off IPS inspection. For Trend Micro Cloud One Network Security Hosted Infrastructure, this option is not available on the management console. Inspection offers this ability as a command line utility.
+For network issues diagnostic, it is very often needed to temporary turn off IPS inspection. For Trend Micro Cloud One Network Security Hosted Infrastructure, this option is not available on the management console. Inspection offers this ability as a command line utility.
 
 ## Usage 
 
 ### Get required configuration parameters
-To use ```inspection``` you will need to get values of several parameters:
+To use Inspection utility you will need to get values of several parameters:
 1. Cloud One Region
 2. Cloud One Account ID
 3. Cloud One API Key
 4. AWS Region
 
-For Cloud One Region and Account ID open [Cloud One console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
+For Cloud One **Region** and **Account ID** open [Cloud One console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
 ![Cloud One console image](images/administration.png?raw=true)
 
-For Cloud One API Key API Keys and push "New" button:
+For Cloud One **API Key**, go to API Keys and push "New" button:
 ![Cloud One console image](images/apikeys.png?raw=true)
  Choose Full Control if you need to change fallback mode and not only check its status:
 ![Cloud One console image](images/newkey.png?raw=true)
 
-For correct AWS region value, go to Network Security -> Network -> Hosted Infrastructure
+For correct **AWS Region** value, go to Network Security -> Network -> Hosted Infrastructure
 ![Cloud One console image](images/nshi.png?raw=true)
 and pick your AWS VPC:
 ![Cloud One console image](images/region.png?raw=true)
-AWS Region value is Availability Zone without last character ("a" in this example)
+**AWS Region** value is Availability Zone without last character ("a" in this example)
 
 ### Get latest Inspection executable
 Download [the latest release](https://github.com/mpkondrashin/inspection/releases/latest) of ```inspection``` executable for your platform.
