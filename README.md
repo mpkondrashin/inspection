@@ -1,13 +1,39 @@
 # Inspection
 
-Control Trend Micro Cloud One Network Security Hosted Infrastructure inspection
+Control Trend Micro Cloud One Network Security Hosted Infrastructure inspection on AWS.
 
 For network issues diagnostic, it is very often needed to turn off IPS inspection. For Trend Micro Cloud One Network Security Hosted Infrastructure, this option is not available on the management console. Inspection offers this ability as a command line utility.
 
 ## Usage 
-1. Download [the latest release](https://github.com/mpkondrashin/inspection/releases/latest) of ```inspection``` executable for your platform.
-2. Copy ```config_example.yaml``` to ```config.yaml``` in the same directory as Inspection executable itself. Edit ```config.yaml``` and change fields to correct values. 
-3. Run ```inspection``` executable with one of following commands: status, on, off.
+
+### Get required configuration parameters
+To use ```inspection``` you will need several parameters:
+1. CloudOne Region
+2. CloudOne Account ID
+3. CloudOne API Key
+4. AWS Region
+
+For CloudOne Region and Account ID open [cloudone console](https://cloudone.trendmicro.com/administration/account-properties) and look for ID and Account ID values:
+![CloudOne console image](image/administration.png)
+
+For Cloud One API Key go to [API Keys](https://cloudone.trendmicro.com/administration/account-properties) and push new button:
+![CloudOne console image](image/apikeys.png)
+ Choose Full Control if you need to change fallback mode and not only check its status:
+
+For correct AWS region value, go to [Netwrok Security](https://cloudone) and pick your AWS VPC:
+![CloudOne console image](image/region.png)
+Region value is Availability Zone without last character ("a" in this example)
+
+### Get latest Inspection executable
+Download [the latest release](https://github.com/mpkondrashin/inspection/releases/latest) of ```inspection``` executable for your platform.
+
+### Create Configuration File
+Copy ```config_example.yaml``` to ```config.yaml``` in the same directory as Inspection executable itself. Edit ```config.yaml``` and change fields to correct values. 
+
+### Run Inspection Utility
+Run ```inspection``` executable with one of following commands: status, on, off.
+
+**Note:** Inspection executable is not signed application, so Operations System may warn you on this. In this case this warning can be ignored.
 
 ## Configuration
 Inspection offers the following ways to provide configuration parameters:
@@ -82,4 +108,3 @@ $./inspection status
 | Data not found                                              | Wrong AWS Region                                                            |
 | HTTP request: Get "...": dial tcp: lookup ...: no such host | Nonexistent region or missing Internet connection                           |
 | Missing <option name>                                       | Given option is missing in config.yaml, environment, commandline            |
-|          
