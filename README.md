@@ -21,7 +21,7 @@ For Cloud One API Key API Keys and push "New" button:
  Choose Full Control if you need to change fallback mode and not only check its status:
 ![Cloud One console image](images/newkey.png?raw=true)
 
-For correct AWS region value, go to [Netwrok Security](https://cloudone) and pick your AWS VPC:
+For correct AWS region value, go to [Netwrok Security](https://cloudone.trendmicro.com/network/ui/hostedinfrastructure) and pick your AWS VPC:
 ![Cloud One console image](images/region.png?raw=true)
 Region value is Availability Zone without last character ("a" in this example)
 
