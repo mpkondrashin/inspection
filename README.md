@@ -7,13 +7,13 @@ For network issues diagnostic, it is very often needed to turn off IPS inspectio
 ## Usage 
 
 ### Get required configuration parameters
-To use ```inspection``` you will need several parameters:
+To use ```inspection``` you will need to get values of several parameters:
 1. CloudOne Region
 2. CloudOne Account ID
 3. CloudOne API Key
 4. AWS Region
 
-For CloudOne Region and Account ID open [cloudone console](https://cloudone.trendmicro.com/administration/account-properties) and look for ID and Account ID values:
+For CloudOne Region and Account ID open [cloudone console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
 ![CloudOne console image](images/administration.png?raw=true)
 
 For Cloud One API Key go to [API Keys](https://cloudone.trendmicro.com/administration/account-properties) and push new button:
