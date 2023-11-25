@@ -14,14 +14,14 @@ To use ```inspection``` you will need several parameters:
 4. AWS Region
 
 For CloudOne Region and Account ID open [cloudone console](https://cloudone.trendmicro.com/administration/account-properties) and look for ID and Account ID values:
-![CloudOne console image](image/administration.png?raw=true)
+![CloudOne console image](images/administration.png?raw=true)
 
 For Cloud One API Key go to [API Keys](https://cloudone.trendmicro.com/administration/account-properties) and push new button:
-![CloudOne console image](image/apikeys.png?raw=true)
+![CloudOne console image](images/apikeys.png?raw=true)
  Choose Full Control if you need to change fallback mode and not only check its status:
 
 For correct AWS region value, go to [Netwrok Security](https://cloudone) and pick your AWS VPC:
-![CloudOne console image](image/region.png?raw=true)
+![CloudOne console image](images/region.png?raw=true)
 Region value is Availability Zone without last character ("a" in this example)
 
 ### Get latest Inspection executable
