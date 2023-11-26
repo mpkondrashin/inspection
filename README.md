@@ -14,6 +14,7 @@ To use Inspection utility you will need to get values of several parameters:
 4. AWS Region
 
 For Cloud One **Region** and **Account ID** open [Cloud One console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
+
 <img src="images/administration.png?raw=true" width="90%" height="90%"/>
 
 region 1576
@@ -22,8 +23,11 @@ newkey 1032
 apikeys 834
 
 For Cloud One **API Key**, go to API Keys and push "New" button:
+
 <img src="images/apikeys.png?raw=true" width="53%" height="53%"/>
- Choose Full Control if you need to change fallback mode and not only check its status:
+
+Choose Full Control if you need to change fallback mode and not only check its status:
+
 <img src="images/newkey.png?raw=true" width="65%" height="65%"/>
 
 For correct **AWS Region** value, go to Network Security -> Network -> Hosted Infrastructure
