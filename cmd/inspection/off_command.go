@@ -12,6 +12,7 @@ package main
 
 import (
 	"context"
+	"inspection/pkg/cone"
 )
 
 type offCommand struct {
@@ -19,7 +20,7 @@ type offCommand struct {
 }
 
 func (c *offCommand) Execute() error {
-	return c.cOne.SetInspectionBypass(context.TODO(), ActionBypass)
+	return c.cOne.SetInspectionBypass(context.TODO(), cone.ActionBypass)
 }
 
 func newOffCommand() *offCommand {

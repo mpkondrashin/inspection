@@ -12,6 +12,7 @@ package main
 
 import (
 	"fmt"
+	"inspection/pkg/cone"
 	"log"
 	"os"
 	"path/filepath"
@@ -30,7 +31,7 @@ type command interface {
 type baseCommand struct {
 	name        string
 	description string
-	cOne        *CloudOneNS
+	cOne        *cone.CloudOneNS
 	fs          *pflag.FlagSet
 }
 
@@ -91,7 +92,7 @@ func (c *baseCommand) Init(args []string) error {
 		//LogIt(Debug, "ReadInConfig: %v", notFoundErr)
 	}
 
-	c.cOne = NewCloudOneNS(
+	c.cOne = cone.NewCloudOneNS(
 		GetNotEmpty(flagApiKey),
 		GetNotEmpty(flagRegion),
 		GetNotEmpty(flagAccountID),

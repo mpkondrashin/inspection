@@ -4,11 +4,11 @@ Inspection (c) by Mikhail Kondrashin (mkondrashin@gmail.com)
 
 Code is released under CC BY license: https://creativecommons.org/licenses/by/4.0/
 
-fallback.go - small library to control fallback mode of C1NS Hostend Infrastucture
+cone.go - small library to control fallback mode of C1NS Hostend Infrastucture
 
 */
 
-package main
+package cone 
 
 import (
 	"bytes"
@@ -43,7 +43,7 @@ func NewCloudOneNS(apiKey string, cloudOneRegion string, accountId string, awsRe
 	}
 }
 
-//go:generate  enum -package main -type Status --names success,fail,in-progress
+//go:generate  enum -package cone -type Status --names success,fail,in-progress
 type COneNSBypassStatus struct {
 	AccountID          string    `json:"accountId"`
 	Action             Action    `json:"action"`
@@ -83,7 +83,7 @@ func (c *CloudOneNS) GetInspectionBypassStatus(ctx context.Context) (*COneNSBypa
 	return nil, cOneError
 }
 
-//go:generate  enum -package main -type Action --names bypass,inspect
+//go:generate  enum -package cone -type Action --names bypass,inspect
 type COneNSBypassRequest struct {
 	AccountID string `json:"accountId"`
 	Action    Action `json:"action"`
