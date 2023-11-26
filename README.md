@@ -16,7 +16,7 @@ To use Inspection utility you will need to get values of several parameters:
 For Cloud One **Region** and **Account ID** open [Cloud One console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
 ![Cloud One console image](images/administration.png?raw=true)
 
-<img src="images/administration.png?raw=true" width="90%" height="90%"/>
+<p style="text-align:center;"><img src="images/administration.png?raw=true" width="90%" height="90%"/></p>
 
 region 1576
 nshi 852
