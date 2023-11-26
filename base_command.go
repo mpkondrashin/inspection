@@ -1,3 +1,13 @@
+/*
+
+Inspection (c) by Mikhail Kondrashin (mkondrashin@gmail.com)
+
+Code is released under CC BY license: https://creativecommons.org/licenses/by/4.0/
+
+base_command.go - base struct for all commands
+
+*/
+
 package main
 
 import (

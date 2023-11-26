@@ -16,6 +16,9 @@ To use Inspection utility you will need to get values of several parameters:
 For Cloud One **Region** and **Account ID** open [Cloud One console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
 ![Cloud One console image](images/administration.png?raw=true)
 
+<img src="images/administration.png?raw=true"/>
+
+
 For Cloud One **API Key**, go to API Keys and push "New" button:
 ![Cloud One console image](images/apikeys.png?raw=true)
  Choose Full Control if you need to change fallback mode and not only check its status:

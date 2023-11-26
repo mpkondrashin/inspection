@@ -1,3 +1,13 @@
+/*
+
+Inspection (c) by Mikhail Kondrashin (mkondrashin@gmail.com)
+
+Code is released under CC BY license: https://creativecommons.org/licenses/by/4.0/
+
+fallback.go - small library to control fallback mode of C1NS Hostend Infrastucture
+
+*/
+
 package main
 
 import (
