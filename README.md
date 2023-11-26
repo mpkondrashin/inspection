@@ -31,9 +31,13 @@ Choose Full Control if you need to change fallback mode and not only check its s
 <img src="images/newkey.png?raw=true" width="65%" height="65%"/>
 
 For correct **AWS Region** value, go to Network Security -> Network -> Hosted Infrastructure
-![Cloud One console image](images/nshi.png?raw=true)
+
+<img src="images/nshi.png?raw=true"  width="54%" height="54%"/>
+
 and pick your AWS VPC:
-![Cloud One console image](images/region.png?raw=true)
+
+<img src="images/region.png?raw=true" width="100%" height="100%"/>
+
 **AWS Region** value is Availability Zone without last character ("a" in this example)
 
 ### Get latest Inspection executable
