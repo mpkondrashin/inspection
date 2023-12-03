@@ -8,7 +8,7 @@ cone.go - small library to control fallback mode of C1NS Hostend Infrastucture
 
 */
 
-package cone 
+package cone
 
 import (
 	"bytes"
@@ -28,18 +28,18 @@ func (e COneError) Error() string {
 }
 
 type CloudOneNS struct {
-	apiKey         string
-	cloudOneRegion string
-	accountId      string
-	awsRegion      string
+	APIKey         string
+	CloudOneRegion string
+	AccountId      string
+	AWSRegion      string
 }
 
 func NewCloudOneNS(apiKey string, cloudOneRegion string, accountId string, awsRegion string) *CloudOneNS {
 	return &CloudOneNS{
-		apiKey:         apiKey,
-		cloudOneRegion: cloudOneRegion,
-		accountId:      accountId,
-		awsRegion:      awsRegion,
+		APIKey:         apiKey,
+		CloudOneRegion: cloudOneRegion,
+		AccountId:      accountId,
+		AWSRegion:      awsRegion,
 	}
 }
 
@@ -57,12 +57,12 @@ type COneNSBypassStatus struct {
 
 func (c *CloudOneNS) GetInspectionBypassStatus(ctx context.Context) (*COneNSBypassStatus, error) {
 	uri := fmt.Sprintf("https://network.%s.cloudone.trendmicro.com/api/nsaas/inspection-bypass?accountId=%s&awsRegion=%s",
-		c.cloudOneRegion, c.accountId, c.awsRegion)
+		c.CloudOneRegion, c.AccountId, c.AWSRegion)
 	req, err := http.NewRequestWithContext(ctx, "GET", uri, nil)
 	if err != nil {
 		return nil, fmt.Errorf("create request: %w", err)
 	}
-	req.Header.Set("Authorization", "ApiKey "+c.apiKey)
+	req.Header.Set("Authorization", "ApiKey "+c.APIKey)
 	req.Header.Set("Api-Version", "v1")
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -92,11 +92,11 @@ type COneNSBypassRequest struct {
 
 func (c *CloudOneNS) SetInspectionBypass(ctx context.Context, action Action) error {
 	uri := fmt.Sprintf("https://network.%s.cloudone.trendmicro.com/api/nsaas/inspection-bypass",
-		c.cloudOneRegion)
+		c.CloudOneRegion)
 	request := COneNSBypassRequest{
-		AccountID: c.accountId,
+		AccountID: c.AccountId,
 		Action:    action,
-		AwsRegion: c.awsRegion,
+		AwsRegion: c.AWSRegion,
 	}
 	var body bytes.Buffer
 	if err := json.NewEncoder(&body).Encode(&request); err != nil {
@@ -106,7 +106,7 @@ func (c *CloudOneNS) SetInspectionBypass(ctx context.Context, action Action) err
 	if err != nil {
 		return fmt.Errorf("create request: %w", err)
 	}
-	req.Header.Set("Authorization", "ApiKey "+c.apiKey)
+	req.Header.Set("Authorization", "ApiKey "+c.APIKey)
 	req.Header.Set("Api-Version", "v1")
 	client := &http.Client{}
 	resp, err := client.Do(req)

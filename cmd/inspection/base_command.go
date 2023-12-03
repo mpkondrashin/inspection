@@ -11,6 +11,7 @@ base_command.go - base struct for all commands
 package main
 
 import (
+	"context"
 	"fmt"
 	"inspection/pkg/cone"
 	"log"
@@ -85,18 +86,56 @@ func (c *baseCommand) Init(args []string) error {
 		notFoundErr, ok := err.(viper.ConfigFileNotFoundError)
 		_ = notFoundErr
 		if !ok {
-			panic(err) //Fatal(RCConfigReadError, "ReadInConfig: %v", err)
+			panic(err)
 		} else {
 			log.Printf("%s: loaded", ConfigFileName)
 		}
-		//LogIt(Debug, "ReadInConfig: %v", notFoundErr)
+	}
+
+	accountID := GetNotEmpty(flagAccountID)
+	apiKey := GetNotEmpty(flagApiKey)
+	awsRegion := viper.GetString(flagAWSRegion)
+	c1Region := viper.GetString(flagRegion)
+
+	if c1Region == "" {
+		if awsRegion == "" {
+			log.Println("Cloud One and AWS regions are missing. Detecting...")
+			_, c1Region, err = cone.DetectBothRegions(context.TODO(), accountID, apiKey)
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			log.Println("Cloud One region is missing. Detecting...")
+			c1Region, err = cone.DetectCloudOneRegion(context.TODO(), accountID, apiKey, awsRegion)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+		log.Println("Detected Cloud One region:", c1Region)
+	}
+
+	if awsRegion == "" {
+		log.Println("AWS region region is missing. Detecting...")
+		awsRegions := cone.DetectAWSRegions(context.TODO(), accountID, apiKey, c1Region)
+		switch len(awsRegions) {
+		case 0:
+			log.Fatal("No AWS regions with Network Security Hosted Infrastructure detected")
+		case 1:
+			log.Println("Detected NSHI in following AWS region:", c1Region)
+			awsRegion = awsRegions[0]
+		default:
+			for _, r := range awsRegions {
+				log.Println("Detected NSHI in AWS region:", r)
+			}
+			log.Fatal("Provide AWS region value and run Inspection again")
+		}
 	}
 
 	c.cOne = cone.NewCloudOneNS(
-		GetNotEmpty(flagApiKey),
-		GetNotEmpty(flagRegion),
-		GetNotEmpty(flagAccountID),
-		GetNotEmpty(flagAWSRegion),
+		apiKey,
+		c1Region,
+		accountID,
+		awsRegion,
 	)
 	return nil
 }
