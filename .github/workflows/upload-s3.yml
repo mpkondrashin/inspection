@@ -1,0 +1,44 @@
+name: Upload to S3
+
+on:
+  push:
+    tags:
+    - '*'  
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+
+    - name: Check Go version
+      run: go version
+
+    - name: Build Inspection Lambda for Linux
+      run: go build ./cmd/linspection  
+
+    - name: Pack
+      uses: montudor/action-zip@v1
+      with:
+        args: zip linspection_${{ github.ref_name }}.zip linspection
+
+    - name: Generate CloudFormation
+      run: sed -e "s/VERSION/${{ github.ref_name }}/g" "cmd/linspection/aws-lambda-template.yaml"  > "linspection_${{ github.ref_name }}.yaml"
+
+    - name: Upload to s3
+      uses: shallwefootball/s3-upload-action@master
+      with:
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: 'mpkondrashin-lambdastorage'
+        source_dir: 'linspection_${{ github.ref_name }}.zip'
+
+    - name: Upload to s3
+      uses: shallwefootball/s3-upload-action@master
+      with:
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: 'mpkondrashin-lambdastorage'
+        source_dir: 'linspection_${{ github.ref_name }}.yaml'

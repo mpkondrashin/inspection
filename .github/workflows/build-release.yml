@@ -67,3 +67,4 @@ jobs:
           inspection_linux64_${{ github.ref_name }}.zip
           inspection_macos_intel_${{ github.ref_name }}.zip
           inspection_macos_m_${{ github.ref_name }}.zip
+

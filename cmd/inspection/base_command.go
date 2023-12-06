@@ -91,7 +91,12 @@ func (c *baseCommand) Init(args []string) error {
 			log.Printf("%s: loaded", ConfigFileName)
 		}
 	}
+	c.cOne = cOne()
+	return nil
+}
 
+func cOne() *cone.CloudOneNS {
+	var err error
 	accountID := GetNotEmpty(flagAccountID)
 	apiKey := GetNotEmpty(flagApiKey)
 	awsRegion := viper.GetString(flagAWSRegion)
@@ -131,13 +136,12 @@ func (c *baseCommand) Init(args []string) error {
 		}
 	}
 
-	c.cOne = cone.NewCloudOneNS(
+	return cone.NewCloudOneNS(
 		apiKey,
 		c1Region,
 		accountID,
 		awsRegion,
 	)
-	return nil
 }
 
 func GetNotEmpty(key string) string {

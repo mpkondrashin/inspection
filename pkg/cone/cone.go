@@ -102,6 +102,7 @@ func (c *CloudOneNS) SetInspectionBypass(ctx context.Context, action Action) err
 	if err := json.NewEncoder(&body).Encode(&request); err != nil {
 		return fmt.Errorf("json encode: %w", err)
 	}
+	fmt.Println(body.String())
 	req, err := http.NewRequestWithContext(ctx, "PUT", uri, &body)
 	if err != nil {
 		return fmt.Errorf("create request: %w", err)

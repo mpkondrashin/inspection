@@ -1,0 +1,95 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Lambda function controlling Cloud One Network Security Hosted Infrastructure bypass mode
+Parameters:
+  CloudOneAPIKey:
+    Type: String
+    NoEcho: true
+    Description: Cloud One API Key (On Cloud One console go to Administration->API Keys->New)
+  CloudOneRegion:
+    Type: String
+    Default: us-1
+    Description: Cloud One account region (On Cloud One console go to Administration-Account Settings->Region)
+    AllowedValues: # Check the following page for most up to date list: https://cloudone.trendmicro.com/docs/identity-and-account-management/c1-regions/
+      - us-1
+      - in-1
+      - gb-1
+      - jp-1
+      - de-1
+      - au-1
+      - ca-1
+      - sg-1
+      - trend-us-1
+  CloudOneAccountID:
+    Type: String
+    Description: Cloud One Account ID (On Cloud One console go to Administration-Account Settings->ID)
+  AWSRegion:
+    Type: String
+    Default: us-east-1
+    Description: |-
+      AWS region of your Netwrok Security Hosted Infrastructure deployment
+      (On Cloud One console go to Network Security -> Network -> Hosted Infrastructure,
+      pick your VPC. Your AWSRegion value will be "Availability Zone" without last character)
+    AllowedValues: # Check the following page for most up to date list: https://cloudone.trendmicro.com/docs/network-security/NSMS_review_environment/#supportedregions
+      - us-west-1
+      - us-west-2
+      - us-east-1
+      - us-east-2
+      - sa-east-1
+      - ap-south-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-northeast-3
+      - eu-central-1
+      - eu-north-1
+      - eu-west-1
+      - eu-west-2
+      - eu-west-3
+      - ca-central-1
+Resources:
+  C1NSStateLambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: 's3:*'
+                Resource: '*'
+  C1NSStateLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Role: !GetAtt C1NSStateLambdaRole.Arn
+      Runtime: go1.x
+      Handler: linspection
+      Code:
+        S3Bucket: mpkondrashin-lambdastorage
+        S3Key: linspection_VERSION.zip
+      Environment:
+        Variables: 
+          C1NS_API_KEY:
+            Ref: CloudOneAPIKey
+          C1NS_REGION:
+            Ref: CloudOneRegion
+          C1NS_ACCOUNT_ID:
+            Ref: CloudOneAccountID
+          C1NS_AWS_REGION:
+            Ref: AWSRegion
+      Tags:
+        - Key: Name
+          Value: TrendMicroCloudOneNSHIBypassSwitch
+
