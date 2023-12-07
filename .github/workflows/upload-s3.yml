@@ -16,7 +16,7 @@ jobs:
     - name: Check Go version
       run: go version
 
-    - name: Build Inspection Lambda for Linux
+    - name: Build Inspection Lambda
       run: go build ./cmd/linspection  
 
     - name: Pack
