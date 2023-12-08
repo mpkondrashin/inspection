@@ -78,7 +78,7 @@ Resources:
       Handler: linspection
       Code:
         S3Bucket: mpkondrashin-lambdastorage
-        S3Key: linspection_VERSION.zip
+        S3Key: gh/linspection_VERSION.zip
       Environment:
         Variables: 
           C1NS_API_KEY:
