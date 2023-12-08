@@ -17,7 +17,7 @@ jobs:
       run: go version
 
     - name: Build Inspection Lambda
-      run: go build ./cmd/linspection  
+      run: GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build ./cmd/linspection  
 
     - name: Create output folder
       run: mkdir tmp
