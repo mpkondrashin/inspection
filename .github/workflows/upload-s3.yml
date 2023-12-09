@@ -29,7 +29,10 @@ jobs:
   
     - name: Generate CloudFormation
       run: sed -e "s/VERSION/${{ github.ref_name }}/g" "cmd/linspection/aws-lambda-template.yaml"  > "tmp/linspection_${{ github.ref_name }}.yaml"
-
+      
+    - name: Generate Deploy CloudFormation HTML
+      run: sed -e "s/VERSION/${{ github.ref_name }}/g" "cmd/linspection/deploy_template.html"  > "tmp/deploy.html"
+    
     - name: Upload to s3
       uses: shallwefootball/s3-upload-action@master
       with:

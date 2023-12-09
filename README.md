@@ -125,3 +125,7 @@ $./inspection status
 | Data not found                                              | Wrong AWS Region                                                            |
 | HTTP request: Get "...": dial tcp: lookup ...: no such host | Nonexistent region or missing Internet connection                           |
 | Missing ...                                                 | Given option is missing in config.yaml, environment, and commandline        |
+
+## Use as AWS Lambda
+
+To run inspection as Lambda on your AWS account, (deploy following Cloud Formation stack)[https://mpkondrashin-lambdastorage.s3.amazonaws.com/gh/deploy.html]. After deployment will finish, run Lambda manualy using Test button. Each Lambda run will switch inspection on and off.
