@@ -73,6 +73,7 @@ Resources:
   C1NSStateLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
+      FunctionName: TrendMicroCloudOneNSHIBypassSwitch
       Role: !GetAtt C1NSStateLambdaRole.Arn
       Runtime: go1.x
       Handler: linspection
