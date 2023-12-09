@@ -128,4 +128,4 @@ $./inspection status
 
 ## Use as AWS Lambda
 
-To run inspection as Lambda on your AWS account, (deploy following Cloud Formation stack)[https://mpkondrashin-lambdastorage.s3.amazonaws.com/gh/deploy.html]. After deployment will finish, run Lambda manualy using Test button. Each Lambda run will switch inspection on and off.
+To run inspection as Lambda on your AWS account, [deploy following Cloud Formation stack](https://mpkondrashin-lambdastorage.s3.amazonaws.com/gh/deploy.html). After deployment will finish, run Lambda manualy using Test button. Each Lambda run will switch inspection on and off.
