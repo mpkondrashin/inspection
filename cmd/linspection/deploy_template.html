@@ -23,7 +23,7 @@
     function launch_stack() {
         aws_region = document.getElementById('aws_region').value;
         stack_name = "TrendMicroCloudOneNSHIStateControl-" + aws_region
-        template_url = "https://mpkondrashin-lambdastorage.s3.amazonaws.com/gh/linspection_v0.0.16.yaml"
+        template_url = "https://mpkondrashin-lambdastorage.s3.amazonaws.com/gh/linspection_VERSION.yaml"
         url = "https://" + aws_region + ".console.aws.amazon.com/cloudformation/home?region=" + aws_region + "#/stacks/create/review?templateURL="+template_url+"&stackName="+stack_name+"&param_AWSRegion="+ aws_region
         window.open(url, '_blank', '');
     }
