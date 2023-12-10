@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Trend Micro Cloud One Netwrok Security Hosted Insfrastructure Run Stack</title>
-  </head>
-  <script>
-    function launch_stack() {
-        aws_region = document.getElementById('aws_region').value;
-        stack_name = "TrendMicroCloudOneNSHIStateControl-" + aws_region
-        template_url = "https://mpkondrashin-lambdastorage.s3.amazonaws.com/gh/linspection_VERSION.yaml"
-        url = "https://" + aws_region + ".console.aws.amazon.com/cloudformation/home?region=" + aws_region + "#/stacks/create/review?templateURL="+template_url+"&stackName="+stack_name+"&param_AWSRegion="+ aws_region
-        window.open(url, '_blank', '');
-    }
-  </script>
+    <script>
+      function launch_stack() {
+          aws_region = document.getElementById('aws_region').value;
+          stack_name = "TrendMicroCloudOneNSHIStateControl-" + aws_region
+          template_url = "https://mpkondrashin-lambdastorage.s3.amazonaws.com/gh/linspection_VERSION.yaml"
+          url = "https://" + aws_region + ".console.aws.amazon.com/cloudformation/home?region=" + aws_region + "#/stacks/create/review?templateURL="+template_url+"&stackName="+stack_name+"&param_AWSRegion="+ aws_region
+          window.open(url, '_blank', '');
+      }
+    </script>
+    </head>
   <body>
     <main>
       <form id="launch_stack_form">
@@ -27,7 +27,7 @@
             <div class="col-9">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <label class="input-group-text" for="inputGroupSelect01">AWS Region</label>
+                  <label class="input-group-text" for="aws_region">AWS Region</label>
                 </div>
                 <select class="custom-select" name="aws_region" id="aws_region">
                   <option value="us-west-1">US West (N. California) us-west-1</option>
