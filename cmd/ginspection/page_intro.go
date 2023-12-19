@@ -14,9 +14,9 @@ import (
 const (
 	//Title = `GInspection v0.0.1`
 
-	IntoText = `Trend Micro Cloud One Netwrok Security Hosted Infrastructure controlling utility.
-
-GInspection allows to turn on and off bypass mode for  Netwrok Security Hosted Infrastructure in given AWS region`
+	IntoText = "Trend Micro Cloud One Netwrok Security Hosted Infrastructure controlling utility. " +
+		"GInspection allows to turn on and off bypass mode for  Netwrok Security Hosted Infrastructure in given AWS region. " +
+		"You will need to have access to the Cloud One console to get Account ID and API Key."
 
 	License = `MIT License
 
@@ -47,7 +47,7 @@ type PageIntro struct {
 var _ Page = &PageIntro{}
 
 func (p *PageIntro) Name() string {
-	return "info"
+	return "Intro"
 }
 
 func (p *PageIntro) Content(win fyne.Window, model *Model) fyne.CanvasObject {
@@ -60,21 +60,25 @@ func (p *PageIntro) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 
 	report := widget.NewRichTextFromMarkdown(IntoText)
 	report.Wrapping = fyne.TextWrapWord
-	link, _ := url.Parse("https://github.com/mpkondrashin/inspection")
-	github := widget.NewHyperlink("GInspector repository on GitHub", link)
+	repoURL, _ := url.Parse("https://github.com/mpkondrashin/inspection")
+	repoLink := widget.NewHyperlink("GInspector repository on GitHub", repoURL)
+	coneURL, _ := url.Parse("https://cloudone.trendmicro.com")
+	coneLink := widget.NewHyperlink("Open Cloud One Console", coneURL)
 
+	licensePopUp := func() {
+		licenseLabel := widget.NewLabel(License)
+		sc := container.NewScroll(licenseLabel)
+		popup := dialog.NewCustom("Show License Information", "Close", sc, win)
+		popup.Resize(fyne.NewSize(800, 600))
+		popup.Show()
+	}
+	licenseButton := widget.NewButton("License Information...", licensePopUp)
 	return container.NewVBox(
 		titleLabel,
 		versionLabel,
 		report,
-		github,
-		widget.NewButton("License Info", func() {
-			licenseLabel := widget.NewLabel(License)
-			sc := container.NewScroll(licenseLabel)
-			popup := dialog.NewCustom("License Information", "Close", sc, win)
-			popup.Resize(fyne.NewSize(800, 600))
-			popup.Show()
-		}),
+		container.NewHBox(coneLink),
+		container.NewHBox(repoLink, licenseButton),
 	)
 }
 

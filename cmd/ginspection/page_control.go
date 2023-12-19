@@ -20,7 +20,7 @@ type PageControl struct {
 var _ Page = &PageOptions{}
 
 func (p *PageControl) Name() string {
-	return "control"
+	return "Control"
 }
 
 func (p *PageControl) GetStatus(model *Model) {

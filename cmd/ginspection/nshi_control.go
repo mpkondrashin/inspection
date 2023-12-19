@@ -6,6 +6,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -35,12 +36,20 @@ func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 	//upper := container.NewHBox(left, widget.NewSeparator(), middle)
 	//left := container.NewHBox(left, widget.NewSeparator(), l)
 	upper := container.NewBorder(nil, nil, container.NewHBox(left, widget.NewSeparator()), nil, middle)
-	quitButton := widget.NewButton("❌ Quit", c.Quit)
-	prevButton := widget.NewButton("< Back", c.Prev)
+	quitButton := widget.NewButtonWithIcon("Quit", theme.CancelIcon(), c.Quit)
+	prevButton := widget.NewButtonWithIcon("Back", theme.NavigateBackIcon(), c.Prev)
 	if c.current == 0 {
 		prevButton.Disable()
 	}
-	nextButton := widget.NewButton("Next >", c.Next)
+
+	nextButton := widget.NewButtonWithIcon("Next", theme.NavigateNextIcon(), c.Next)
+	nextButton.IconPlacement = widget.ButtonIconTrailingText
+
+	/*nextButton.OnKeyDown = func(key *fyne.KeyEvent) {
+		if key.Name == fyne.KeyReturn {
+			c.Next()
+		}
+	}*/
 	if c.current == len(c.pages)-1 {
 		nextButton.Disable()
 	}

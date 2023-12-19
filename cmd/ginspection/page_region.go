@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"inspection/pkg/cone"
-	"log"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -39,19 +38,17 @@ type PageRegion struct {
 var _ Page = &PageRegion{}
 
 func (p *PageRegion) Name() string {
-	return "region"
+	return "Region"
 }
 
 func (p *PageRegion) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 
 	selectedRegion := ""
 	if model.config.AWSRegion != "" {
-		log.Println(" model.config.AWSRegion", model.config.AWSRegion)
 		selectedRegion = model.config.AWSRegion
 	} else {
 		awsRegions := cone.DetectAWSRegions(context.TODO(), model.config.AccountID, model.config.apiKeyDecrypted, model.config.Region)
-		log.Println(" awsRegions", awsRegions)
-		if len(awsRegions) > 1 {
+		if len(awsRegions) > 0 {
 			selectedRegion = awsRegions[0]
 		}
 	}
@@ -62,7 +59,6 @@ func (p *PageRegion) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	if selectedRegion != "" {
 		p.awsRegionList.SetSelected(selectedRegion)
 	}
-	//awsRegionsHBox := container.NewHBox(p.awsRegionList, widget.NewButton("detect", nil))
 	passwordForm := widget.NewForm(
 		widget.NewFormItem("AWS NSHI Region:", p.awsRegionList),
 	)

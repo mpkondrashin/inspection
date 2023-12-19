@@ -15,7 +15,7 @@ type PagePassword struct {
 var _ Page = &PagePassword{}
 
 func (p *PagePassword) Name() string {
-	return "auth"
+	return "Auth"
 }
 
 func (p *PagePassword) Content(win fyne.Window, model *Model) fyne.CanvasObject {
@@ -24,16 +24,18 @@ func (p *PagePassword) Content(win fyne.Window, model *Model) fyne.CanvasObject 
 	p.passwordEntry.Text = model.password
 	p.passwordEntry.Validator = CheckPassword
 	passwordFormItem := widget.NewFormItem("Password:", p.passwordEntry)
+	passwordFormItem.HintText = "At least 8 characters, upper/lower case, digits and special characters"
 	passwordForm := widget.NewForm(passwordFormItem)
 	return container.NewVBox(labelTop, passwordForm)
 }
 
 func (p *PagePassword) AquireData(model *Model) error {
-	//if len(p.passwordEntry.Text) < 1 {
-	//	return errors.New("password is too short")
-	//}
+	if err := p.passwordEntry.Validate(); err != nil {
+		return err
+	}
 	model.password = p.passwordEntry.Text
 	err := model.config.Load(configFileName, model.password)
+
 	if err != nil && !os.IsNotExist(err) {
 		return err
 	}
