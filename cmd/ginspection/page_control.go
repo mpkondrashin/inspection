@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"inspection/pkg/cone"
-	"log"
 	"time"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -23,36 +24,41 @@ func (p *PageControl) Name() string {
 }
 
 func (p *PageControl) GetStatus(model *Model) {
-	//	infinite := widget.NewProgressBarInfinite()
 	cOne := model.COne()
 	for {
 		stop := InfiniteProgress(p.statusLabel)
 		status, err := cOne.GetInspectionBypassStatus(context.TODO())
 		stop()
 		if err != nil {
-			log.Println("err: ", err)
 			p.statusLabel.SetText(err.Error())
 			p.bypassButton.Enable()
 			p.inspectButton.Enable()
 			return
 		} else {
-			log.Println("STATUS", status)
-			p.statusLabel.SetText(status.Status)
-			log.Println("set status ", status.Status)
 			switch status.Status {
-			case "in-progress":
+			case cone.StatusIn_progress:
 				time.Sleep(1 * time.Second)
 				continue
-			case "bypass":
-				p.bypassButton.Disable()
-				p.inspectButton.Enable()
-				return
-			case "inspect":
+			case cone.StatusFail:
 				p.bypassButton.Enable()
-				p.inspectButton.Disable()
+				p.inspectButton.Enable()
+				p.statusLabel.SetText(cone.StatusFail.String() + ": " + status.Error)
+				return
+			case cone.StatusSuccess:
+				switch status.Action {
+				case cone.ActionBypass:
+					p.bypassButton.Disable()
+					p.inspectButton.Enable()
+				case cone.ActionInspect:
+					p.bypassButton.Enable()
+					p.inspectButton.Disable()
+				}
+				p.statusLabel.SetText(status.Action.String())
 				return
 			default:
 				p.statusLabel.SetText(status.Error)
+				p.bypassButton.Enable()
+				p.inspectButton.Enable()
 				return
 			}
 		}
@@ -62,29 +68,27 @@ func (p *PageControl) GetStatus(model *Model) {
 func (p *PageControl) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	p.statusLabel = widget.NewLabelWithStyle("", fyne.TextAlignLeading, fyne.TextStyle{Bold: true})
 	go p.GetStatus(model)
-	bypassFunc := func(action cone.Action) {
+	controlFunc := func(action cone.Action) {
 		cOne := model.COne()
 		stop := InfiniteProgress(p.statusLabel)
 		err := cOne.SetInspectionBypass(context.TODO(), action)
 		stop()
 		if err != nil {
-			log.Println(err)
+			dialog.ShowError(err, win)
 			return
 		}
 		p.GetStatus(model)
 	}
 	p.bypassButton = widget.NewButton("Bypass", func() {
-		bypassFunc(cone.ActionBypass)
+		controlFunc(cone.ActionBypass)
 	})
-	p.bypassButton.Disable()
 	p.inspectButton = widget.NewButton("Inspect", func() {
-		bypassFunc(cone.ActionInspect)
+		controlFunc(cone.ActionInspect)
 	})
-	p.inspectButton.Disable()
-	return widget.NewForm(
-		widget.NewFormItem("Current State:", p.statusLabel),
-		widget.NewFormItem("Bypass:", p.bypassButton),
-		widget.NewFormItem("Inspect:", p.inspectButton),
+	return container.NewVBox(
+		container.NewHBox(widget.NewLabel("Current State:"), p.statusLabel),
+		p.bypassButton,
+		p.inspectButton,
 	)
 }
 

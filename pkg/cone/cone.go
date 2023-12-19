@@ -52,7 +52,7 @@ type COneNSBypassStatus struct {
 	Error              string    `json:"error"`
 	InitiateByCustomer bool      `json:"initiateByCustomer"`
 	InitiatorAccountID string    `json:"initiatorAccountId"`
-	Status             string    `json:"status"`
+	Status             Status    `json:"status"`
 	UpdateTime         time.Time `json:"updateTime"`
 }
 
