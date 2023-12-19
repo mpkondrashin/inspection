@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"inspection/pkg/version"
 	"net/url"
 
 	"fyne.io/fyne/v2"
@@ -10,11 +12,9 @@ import (
 )
 
 const (
-	Title = `GInspection v0.0.1`
+	//Title = `GInspection v0.0.1`
 
-	IntoText = `Version v0.0.1
-
-Trend Micro Cloud One Netwrok Security Hosted Infrastructure controlling utility.
+	IntoText = `Trend Micro Cloud One Netwrok Security Hosted Infrastructure controlling utility.
 
 GInspection allows to turn on and off bypass mode for  Netwrok Security Hosted Infrastructure in given AWS region`
 
@@ -51,21 +51,27 @@ func (p *PageIntro) Name() string {
 }
 
 func (p *PageIntro) Content(win fyne.Window, model *Model) fyne.CanvasObject {
+	titleLabel := widget.NewLabelWithStyle("GInspection",
+		fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 
-	title := widget.NewLabelWithStyle("GInspection", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+	version := fmt.Sprintf("Version %s", version.MajorMinorRevision)
+	versionLabel := widget.NewLabelWithStyle(version,
+		fyne.TextAlignCenter, fyne.TextStyle{})
+
 	report := widget.NewRichTextFromMarkdown(IntoText)
 	report.Wrapping = fyne.TextWrapWord
 	link, _ := url.Parse("https://github.com/mpkondrashin/inspection")
 	github := widget.NewHyperlink("GInspector repository on GitHub", link)
 
 	return container.NewVBox(
-		title,
+		titleLabel,
+		versionLabel,
 		report,
 		github,
 		widget.NewButton("License Info", func() {
 			licenseLabel := widget.NewLabel(License)
 			sc := container.NewScroll(licenseLabel)
-			popup := dialog.NewCustom("License Information", "Close", sc, win) //fyne.CurrentApp().Driver().Canvas())
+			popup := dialog.NewCustom("License Information", "Close", sc, win)
 			popup.Resize(fyne.NewSize(800, 600))
 			popup.Show()
 		}),
