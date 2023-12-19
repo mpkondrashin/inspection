@@ -16,6 +16,21 @@ jobs:
         - name: Build GInspection for Windows
           run: go build ./cmd/ginspection
         
-        - name: LS
-          run: dir
-        
+        - name: Build Inspection for Windows
+          run: go build ./cmd/inspection
+    
+        - name: Pack for Windows
+          uses: montudor/action-zip@v1
+          #if: startsWith(github.ref, 'refs/tags/')
+          with:
+            args: zip -j "inspection_win64.zip" inspection.exe ginspection.exe README.md config_example.yaml
+            #args: zip -j "inspection_win64_${{ github.ref_name }}.zip" inspection.exe  README.md config_example.yaml
+    
+        - name: Release
+          uses: softprops/action-gh-release@v1
+#           #if: startsWith(github.ref, 'refs/tags/')
+          with:
+            files: |
+              inspection_win64.zip
+      
+      
