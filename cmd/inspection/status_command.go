@@ -26,6 +26,9 @@ func (c *statusCommand) Execute() error {
 	}
 	log.Printf("Action: %v", status.Action)
 	log.Printf("Status: %v", status.Status)
+	if status.Error != "" {
+		log.Printf("Error: %v", status.Error)
+	}
 	log.Printf("Last change: %v", status.UpdateTime.Local())
 	return nil
 }

@@ -15,6 +15,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 )
@@ -102,7 +103,7 @@ func (c *CloudOneNS) SetInspectionBypass(ctx context.Context, action Action) err
 	if err := json.NewEncoder(&body).Encode(&request); err != nil {
 		return fmt.Errorf("json encode: %w", err)
 	}
-	fmt.Println(body.String())
+	//fmt.Println(body.String())
 	req, err := http.NewRequestWithContext(ctx, "PUT", uri, &body)
 	if err != nil {
 		return fmt.Errorf("create request: %w", err)
@@ -122,4 +123,52 @@ func (c *CloudOneNS) SetInspectionBypass(ctx context.Context, action Action) err
 		return fmt.Errorf("decode error: %w", err)
 	}
 	return cOneError
+}
+
+type AccountInfo struct {
+	ID           string    `json:"id"`
+	Alias        string    `json:"alias"`
+	Locale       string    `json:"locale"`
+	Timezone     string    `json:"timezone"`
+	Region       string    `json:"region"`
+	State        string    `json:"state"`
+	Created      time.Time `json:"created"`
+	LastModified time.Time `json:"lastModified"`
+	Urn          string    `json:"urn"`
+	MfaRequired  bool      `json:"mfaRequired"`
+	Links        []struct {
+		Rel    string `json:"rel"`
+		Href   string `json:"href"`
+		Method string `json:"method"`
+	} `json:"links"`
+}
+
+func (c *CloudOneNS) GetAccountInfo(ctx context.Context) (*AccountInfo, error) {
+	uri := fmt.Sprintf("https://accounts.cloudone.trendmicro.com/api/accounts/%s", c.AccountId)
+	req, err := http.NewRequestWithContext(ctx, "GET", uri, nil)
+	if err != nil {
+		return nil, fmt.Errorf("create request: %w", err)
+	}
+	req.Header.Set("Authorization", "ApiKey "+c.APIKey)
+	req.Header.Set("Api-Version", "v1")
+	log.Println(req.Header)
+	log.Println(uri)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	log.Println(resp, err)
+	if err != nil {
+		return nil, fmt.Errorf("HTTP request: %w", err)
+	}
+	if resp.StatusCode == 200 {
+		var response AccountInfo
+		if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
+			return nil, fmt.Errorf("decode error: %w", err)
+		}
+		return &response, nil
+	}
+	var cOneError COneError
+	if err := json.NewDecoder(resp.Body).Decode(&cOneError); err != nil {
+		return nil, fmt.Errorf("decode error: %w", err)
+	}
+	return nil, cOneError
 }

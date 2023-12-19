@@ -29,6 +29,7 @@ const (
 	cmdStatus = "status"
 	cmdOn     = "on"
 	cmdOff    = "off"
+	cmdInfo   = "info"
 )
 
 const (
@@ -42,6 +43,7 @@ var commands = []command{
 	newStatusCommand(),
 	newOnCommand(),
 	newOffCommand(),
+	newInfoCommand(),
 }
 
 func usage() {

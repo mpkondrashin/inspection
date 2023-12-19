@@ -45,7 +45,8 @@ func DetectAWSRegions(ctx context.Context, accountID, apiKey, cloudOneRegion str
 		go func(r string) {
 			defer wg.Done()
 			c := NewCloudOneNS(apiKey, cloudOneRegion, accountID, r)
-			if _, err := c.GetInspectionBypassStatus(ctx); err != nil {
+			status, err := c.GetInspectionBypassStatus(ctx)
+			if err != nil || len(status.Error) > 0 {
 				return
 			}
 			mu.Lock()
