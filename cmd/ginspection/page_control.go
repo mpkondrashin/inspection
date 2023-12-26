@@ -95,3 +95,31 @@ func (p *PageControl) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 func (p *PageControl) AquireData(model *Model) error {
 	return nil
 }
+
+func InfiniteProgressFunc(callback func(s string)) func() {
+	stop := make(chan struct{})
+	go func() {
+		chars := `.oOo`
+		chars = `/-\|`
+		chars = ` booo dooo oboo odoo oobo oodo ooob oood oooq ooop ooqo oopo oqoo opoo qooo pooo`
+		chars = `      .     o     O     o     .`
+		size := 5
+		i := 0
+		for {
+			select {
+			case <-stop:
+				return
+			default:
+				callback(chars[i*size : i*size+size])
+				i++
+				if i*size == len(chars) {
+					i = 0
+				}
+				time.Sleep(100 * time.Millisecond)
+			}
+		}
+	}()
+	return func() {
+		stop <- struct{}{}
+	}
+}

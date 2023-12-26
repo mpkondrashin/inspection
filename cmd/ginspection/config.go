@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"log"
 	"os"
 
 	"gopkg.in/yaml.v2"
@@ -27,7 +26,6 @@ func (c *Configuration) Save(fileName, password string) (err error) {
 	if err != nil {
 		return err
 	}
-	log.Println("To write: ", fileName)
 	return os.WriteFile(fileName, data, 0600)
 }
 

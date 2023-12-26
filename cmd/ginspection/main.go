@@ -30,36 +30,6 @@ type Page interface {
 	AquireData(model *Model) error
 }
 
-func InfiniteProgressFunc(callback func(s string)) func() {
-	stop := make(chan struct{})
-	go func() {
-		chars := ".oOo"
-		chars = `/-\|`
-		chars = ` booo dooo oboo odoo oobo oodo ooob oood oooq ooop ooqo oopo oqoo opoo qooo pooo`
-		//substr := chars[i : i+4]
-		i := 0
-		for {
-			select {
-			case <-stop:
-				//fmt.Println("got a close signal")
-				//wg.Done()
-				return
-			default:
-				callback(chars[i*5 : i*5+5])
-				//				label.SetText(string(chars[i]))
-				i++
-				if i*5 == len(chars) {
-					i = 0
-				}
-				time.Sleep(100 * time.Millisecond)
-			}
-		}
-	}()
-	return func() {
-		stop <- struct{}{}
-	}
-}
-
 func InfiniteProgress(label *widget.Label) func() {
 	stop := make(chan struct{})
 	go func() {
