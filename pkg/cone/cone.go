@@ -15,7 +15,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
+	"io"
 	"net/http"
 	"time"
 )
@@ -91,39 +91,40 @@ type COneNSBypassRequest struct {
 	AwsRegion string `json:"awsRegion"`
 }
 
-func (c *CloudOneNS) SetInspectionBypass(ctx context.Context, action Action) error {
-	uri := fmt.Sprintf("https://network.%s.cloudone.trendmicro.com/api/nsaas/inspection-bypass",
-		c.CloudOneRegion)
-	request := COneNSBypassRequest{
-		AccountID: c.AccountId,
-		Action:    action,
-		AwsRegion: c.AWSRegion,
-	}
-	var body bytes.Buffer
-	if err := json.NewEncoder(&body).Encode(&request); err != nil {
-		return fmt.Errorf("json encode: %w", err)
-	}
-	//fmt.Println(body.String())
-	req, err := http.NewRequestWithContext(ctx, "PUT", uri, &body)
-	if err != nil {
-		return fmt.Errorf("create request: %w", err)
-	}
-	req.Header.Set("Authorization", "ApiKey "+c.APIKey)
-	req.Header.Set("Api-Version", "v1")
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return fmt.Errorf("HTTP request: %w", err)
-	}
-	if resp.StatusCode == 202 {
-		return nil
-	}
-	var cOneError COneError
-	if err := json.NewDecoder(resp.Body).Decode(&cOneError); err != nil {
-		return fmt.Errorf("decode error: %w", err)
-	}
-	return cOneError
-}
+/*
+	func (c *CloudOneNS) SetInspectionBypass(ctx context.Context, action Action) error {
+		uri := fmt.Sprintf("https://network.%s.cloudone.trendmicro.com/api/nsaas/inspection-bypass",
+			c.CloudOneRegion)
+		request := COneNSBypassRequest{
+			AccountID: c.AccountId,
+			Action:    action,
+			AwsRegion: c.AWSRegion,
+		}
+		var body bytes.Buffer
+		if err := json.NewEncoder(&body).Encode(&request); err != nil {
+			return fmt.Errorf("json encode: %w", err)
+		}
+		//fmt.Println(body.String())
+		req, err := http.NewRequestWithContext(ctx, "PUT", uri, &body)
+		if err != nil {
+			return fmt.Errorf("create request: %w", err)
+		}
+		req.Header.Set("Authorization", "ApiKey "+c.APIKey)
+		req.Header.Set("Api-Version", "v1")
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			return fmt.Errorf("HTTP request: %w", err)
+		}
+		if resp.StatusCode == 202 {
+			return nil
+		}
+		var cOneError COneError
+		if err := json.NewDecoder(resp.Body).Decode(&cOneError); err != nil {
+			return fmt.Errorf("decode error: %w", err)
+		}
+		return cOneError
+	}*/
 
 type AccountInfo struct {
 	ID           string    `json:"id"`
@@ -143,32 +144,84 @@ type AccountInfo struct {
 	} `json:"links"`
 }
 
-func (c *CloudOneNS) GetAccountInfo(ctx context.Context) (*AccountInfo, error) {
-	uri := fmt.Sprintf("https://accounts.cloudone.trendmicro.com/api/accounts/%s", c.AccountId)
-	req, err := http.NewRequestWithContext(ctx, "GET", uri, nil)
+/*
+	func (c *CloudOneNS) GetAccountInfo(ctx context.Context) (*AccountInfo, error) {
+		uri := fmt.Sprintf("https://accounts.cloudone.trendmicro.com/api/accounts/%s", c.AccountId)
+		req, err := http.NewRequestWithContext(ctx, "GET", uri, nil)
+		if err != nil {
+			return nil, fmt.Errorf("create request: %w", err)
+		}
+		req.Header.Set("Authorization", "ApiKey "+c.APIKey)
+		req.Header.Set("Api-Version", "v1")
+		//log.Println(req.Header)
+		//log.Println(uri)
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		//log.Println(resp, err)
+		if err != nil {
+			return nil, fmt.Errorf("HTTP request: %w", err)
+		}
+		if resp.StatusCode == 200 {
+			var response AccountInfo
+			if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
+				return nil, fmt.Errorf("decode error: %w", err)
+			}
+			return &response, nil
+		}
+		var cOneError COneError
+		if err := json.NewDecoder(resp.Body).Decode(&cOneError); err != nil {
+			return nil, fmt.Errorf("decode error: %w", err)
+		}
+		return nil, cOneError
+	}
+*/
+func (c *CloudOneNS) request(ctx context.Context, method string, uri string, body io.Reader, response any) error {
+	req, err := http.NewRequestWithContext(ctx, method, uri, body)
 	if err != nil {
-		return nil, fmt.Errorf("create request: %w", err)
+		return fmt.Errorf("create request: %w", err)
 	}
 	req.Header.Set("Authorization", "ApiKey "+c.APIKey)
 	req.Header.Set("Api-Version", "v1")
-	log.Println(req.Header)
-	log.Println(uri)
 	client := &http.Client{}
 	resp, err := client.Do(req)
-	log.Println(resp, err)
 	if err != nil {
-		return nil, fmt.Errorf("HTTP request: %w", err)
+		return fmt.Errorf("HTTP request: %w", err)
 	}
-	if resp.StatusCode == 200 {
-		var response AccountInfo
-		if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-			return nil, fmt.Errorf("decode error: %w", err)
+
+	if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
+		if response != nil {
+			if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
+				return fmt.Errorf("decode error: %w", err)
+			}
 		}
-		return &response, nil
+		return nil
 	}
 	var cOneError COneError
 	if err := json.NewDecoder(resp.Body).Decode(&cOneError); err != nil {
-		return nil, fmt.Errorf("decode error: %w", err)
+		return fmt.Errorf("decode error: %w", err)
 	}
-	return nil, cOneError
+	return cOneError
+}
+
+func (c *CloudOneNS) GetAccountInfo_(ctx context.Context) (*AccountInfo, error) {
+	uri := fmt.Sprintf("https://accounts.cloudone.trendmicro.com/api/accounts/%s", c.AccountId)
+	var response AccountInfo
+	err := c.request(ctx, "GET", uri, nil, &response)
+	return &response, err
+
+}
+
+func (c *CloudOneNS) SetInspectionBypass_(ctx context.Context, action Action) error {
+	uri := fmt.Sprintf("https://network.%s.cloudone.trendmicro.com/api/nsaas/inspection-bypass",
+		c.CloudOneRegion)
+	request := COneNSBypassRequest{
+		AccountID: c.AccountId,
+		Action:    action,
+		AwsRegion: c.AWSRegion,
+	}
+	var body bytes.Buffer
+	if err := json.NewEncoder(&body).Encode(&request); err != nil {
+		return fmt.Errorf("json encode: %w", err)
+	}
+	return c.request(ctx, "PUT", uri, &body, nil)
 }

@@ -123,6 +123,10 @@ github.com/fyne-io/image v0.0.0-20220602074514-4956b0afb3d2/go.mod h1:eO7W361vml
 github.com/fyne-io/mobile v0.1.2/go.mod h1:/kOrWrZB6sasLbEy2JIvr4arEzQTXBTZGb3Y96yWbHY=
 github.com/fyne-io/terminal v0.0.0-20211022214227-ef292b54d29a h1:SMIJM4GyYw8d6pXcD2s08mNvNXQQVcN1L6cupR/6OyU=
 github.com/fyne-io/terminal v0.0.0-20211022214227-ef292b54d29a/go.mod h1:zkqKA2a0sUIR0dxwSE+Pzon9IEuuS1DVo4AyihLROfo=
+github.com/gen2brain/iup-go v3.30.2+incompatible h1:DdXbIpe4rUKFBH7CgBWS3T/73NaOg4ZGN8jED9Ycq+Y=
+github.com/gen2brain/iup-go v3.30.2+incompatible/go.mod h1:eFy2UvTT8zJl98EDKDTtiSP92OoYjjgHj015cy6R+Ak=
+github.com/gen2brain/iup-go/iup v0.0.0-20231016042002-a3b3bba3edbc h1:JhlOTYLoJPW5uJLKM7t4YBm6a8iwcKg5Y6NR+7YUZDo=
+github.com/gen2brain/iup-go/iup v0.0.0-20231016042002-a3b3bba3edbc/go.mod h1:HeMeojpQFldBWCMmU5dkmU640AdEcS+SPyEVLMJjjrw=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/go-gl/gl v0.0.0-20190320180904-bf2b1f2f34d7/go.mod h1:482civXOzJJCPzJ4ZOX/pwvXBWSnzD4OKMdH4ClKGbk=
 github.com/go-gl/gl v0.0.0-20210813123233-e4099ee2221f/go.mod h1:wjpnOv6ONl2SuJSxqCPVaPZibGFdSci9HFocT9qtVYM=

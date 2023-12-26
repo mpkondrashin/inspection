@@ -20,7 +20,7 @@ type infoCommand struct {
 }
 
 func (c *infoCommand) Execute() error {
-	info, err := c.cOne.GetAccountInfo(context.TODO())
+	info, err := c.cOne.GetAccountInfo_(context.TODO())
 	if err != nil {
 		return err
 	}

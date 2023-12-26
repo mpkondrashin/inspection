@@ -22,8 +22,8 @@ jobs:
     - name: Check Go version
       run: go version
 
-    - name: Build Inspection for Windows
-      run: GOOS=windows GOARCH=amd64 go build ./cmd/inspection
+#    - name: Build Inspection for Windows
+#      run: GOOS=windows GOARCH=amd64 go build ./cmd/inspection
       
     - name: Pack for Windows
       uses: montudor/action-zip@v1
