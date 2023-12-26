@@ -20,7 +20,7 @@ func NewCloudOneNS() *cone.CloudOneNS {
 		GetEnv(flagApiKey),
 		GetEnv(flagRegion),
 		GetEnv(flagAccountID),
-		GetEnv(flagAWSRegion),
+		//GetEnv(flagAWSRegion),
 	)
 }
 

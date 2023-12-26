@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"inspection/pkg/cone"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -47,7 +46,7 @@ func (p *PageRegion) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	if model.config.AWSRegion != "" {
 		selectedRegion = model.config.AWSRegion
 	} else {
-		awsRegions := cone.DetectAWSRegions(context.TODO(), model.config.AccountID, model.config.apiKeyDecrypted, model.config.Region)
+		awsRegions := model.COne().DetectAWSRegions(context.TODO())
 		if len(awsRegions) > 0 {
 			selectedRegion = awsRegions[0]
 		}

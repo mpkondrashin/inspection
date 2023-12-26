@@ -20,7 +20,7 @@ type statusCommand struct {
 }
 
 func (c *statusCommand) Execute() error {
-	status, err := c.cOne.GetInspectionBypassStatus(context.TODO())
+	status, err := c.cOne.GetInspectionBypassStatus(context.TODO(), c.awsRegion)
 	if err != nil {
 		return err
 	}

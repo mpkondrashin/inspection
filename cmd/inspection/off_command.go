@@ -20,7 +20,7 @@ type offCommand struct {
 }
 
 func (c *offCommand) Execute() error {
-	return c.cOne.SetInspectionBypass_(context.TODO(), cone.ActionBypass)
+	return c.cOne.SetInspectionBypass_(context.TODO(), c.awsRegion, cone.ActionBypass)
 }
 
 func newOffCommand() *offCommand {

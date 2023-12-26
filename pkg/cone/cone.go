@@ -17,6 +17,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -32,15 +33,15 @@ type CloudOneNS struct {
 	APIKey         string
 	CloudOneRegion string
 	AccountId      string
-	AWSRegion      string
+	// AWSRegion      string
 }
 
-func NewCloudOneNS(apiKey string, cloudOneRegion string, accountId string, awsRegion string) *CloudOneNS {
+func NewCloudOneNS(apiKey string, cloudOneRegion string, accountId string /*, awsRegion string*/) *CloudOneNS {
 	return &CloudOneNS{
 		APIKey:         apiKey,
 		CloudOneRegion: cloudOneRegion,
 		AccountId:      accountId,
-		AWSRegion:      awsRegion,
+		//	AWSRegion:      awsRegion,
 	}
 }
 
@@ -56,9 +57,9 @@ type COneNSBypassStatus struct {
 	UpdateTime         time.Time `json:"updateTime"`
 }
 
-func (c *CloudOneNS) GetInspectionBypassStatus(ctx context.Context) (*COneNSBypassStatus, error) {
+func (c *CloudOneNS) GetInspectionBypassStatus_(ctx context.Context, AWSRegion string) (*COneNSBypassStatus, error) {
 	uri := fmt.Sprintf("https://network.%s.cloudone.trendmicro.com/api/nsaas/inspection-bypass?accountId=%s&awsRegion=%s",
-		c.CloudOneRegion, c.AccountId, c.AWSRegion)
+		c.CloudOneRegion, c.AccountId /*c.*/, AWSRegion)
 	req, err := http.NewRequestWithContext(ctx, "GET", uri, nil)
 	if err != nil {
 		return nil, fmt.Errorf("create request: %w", err)
@@ -211,17 +212,81 @@ func (c *CloudOneNS) GetAccountInfo_(ctx context.Context) (*AccountInfo, error) 
 
 }
 
-func (c *CloudOneNS) SetInspectionBypass_(ctx context.Context, action Action) error {
+func (c *CloudOneNS) SetInspectionBypass_(ctx context.Context, awsRegion string, action Action) error {
 	uri := fmt.Sprintf("https://network.%s.cloudone.trendmicro.com/api/nsaas/inspection-bypass",
 		c.CloudOneRegion)
 	request := COneNSBypassRequest{
 		AccountID: c.AccountId,
 		Action:    action,
-		AwsRegion: c.AWSRegion,
+		AwsRegion:/*c.*/ awsRegion,
 	}
 	var body bytes.Buffer
 	if err := json.NewEncoder(&body).Encode(&request); err != nil {
 		return fmt.Errorf("json encode: %w", err)
 	}
 	return c.request(ctx, "PUT", uri, &body, nil)
+}
+
+func (c *CloudOneNS) GetInspectionBypassStatus(ctx context.Context, AWSRegion string) (*COneNSBypassStatus, error) {
+
+	uri := fmt.Sprintf("https://network.%s.cloudone.trendmicro.com/api/nsaas/inspection-bypass?accountId=%s&awsRegion=%s",
+		c.CloudOneRegion, c.AccountId /*c.*/, AWSRegion)
+	var response COneNSBypassStatus
+	err := c.request(ctx, "GET", uri, nil, &response)
+	if err != nil {
+		return nil, err
+	}
+	return &response, nil
+
+}
+
+var AWSRegions = []string{
+	"af-south-1",
+	"ap-east-1",
+	"ap-northeast-1",
+	"ap-northeast-2",
+	"ap-northeast-3",
+	"ap-south-1",
+	"ap-south-2",
+	"ap-southeast-1",
+	"ap-southeast-2",
+	"ap-southeast-3",
+	"ap-southeast-4",
+	"ca-central-1",
+	"eu-central-1",
+	"eu-central-2",
+	"eu-north-1",
+	"eu-south-1",
+	"eu-south-2",
+	"eu-west-1",
+	"eu-west-2",
+	"eu-west-3",
+	"il-central-1",
+	"me-central-1",
+	"me-south-1",
+	"sa-east-1",
+	"us-east-1",
+	"us-east-2",
+	"us-west-1",
+	"us-west-2",
+}
+
+func (c *CloudOneNS) DetectAWSRegions(ctx context.Context) (awsRegion []string) {
+	var wg sync.WaitGroup
+	var mu sync.Mutex
+	for _, region := range AWSRegions {
+		wg.Add(1)
+		go func(r string) {
+			defer wg.Done()
+			status, err := c.GetInspectionBypassStatus(ctx, r)
+			if err != nil || len(status.Error) > 0 {
+				return
+			}
+			mu.Lock()
+			awsRegion = append(awsRegion, r)
+			mu.Unlock()
+		}(region)
+	}
+	wg.Wait()
+	return
 }

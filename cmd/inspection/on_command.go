@@ -20,7 +20,7 @@ type onCommand struct {
 }
 
 func (c *onCommand) Execute() error {
-	return c.cOne.SetInspectionBypass(context.TODO(), cone.ActionInspect)
+	return c.cOne.SetInspectionBypass_(context.TODO(), c.awsRegion, cone.ActionInspect)
 }
 
 func newOnCommand() *onCommand {

@@ -43,5 +43,5 @@ func (m *Model) Changed() bool {
 }
 
 func (m *Model) COne() *cone.CloudOneNS {
-	return cone.NewCloudOneNS(m.config.apiKeyDecrypted, m.config.Region, m.config.AccountID, m.config.AWSRegion)
+	return cone.NewCloudOneNS(m.config.apiKeyDecrypted, m.config.Region, m.config.AccountID)
 }

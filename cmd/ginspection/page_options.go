@@ -48,7 +48,7 @@ func (p *PageOptions) AquireData(model *Model) error {
 	model.config.AccountID = p.accountIDEntry.Text
 
 	cOne := model.COne()
-	info, err := cOne.GetAccountInfo(context.TODO())
+	info, err := cOne.GetAccountInfo_(context.TODO())
 
 	if err != nil {
 		return err

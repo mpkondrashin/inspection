@@ -17,7 +17,7 @@ func main() {
 func hello() (string, error) {
 	cOne := coneenv.NewCloudOneNS()
 	inspection := cone.ActionBypass
-	status, err := cOne.GetInspectionBypassStatus(context.TODO())
+	status, err := cOne.GetInspectionBypassStatus(context.TODO(), GetEnv(flagAWSRegion))
 	errMessage := ""
 	if err != nil {
 		errMessage += "(" + err.Error() + ") "
@@ -26,7 +26,7 @@ func hello() (string, error) {
 			inspection = cone.ActionInspect
 		}
 	}
-	err = cOne.SetInspectionBypass(context.TODO(), inspection)
+	err = cOne.SetInspectionBypass_(context.TODO(), GetEnv(flagAWSRegion), inspection)
 	if err != nil {
 		return "", err
 	}
@@ -47,7 +47,7 @@ func NewCloudOneNS() *cone.CloudOneNS {
 		GetEnv(flagApiKey),
 		GetEnv(flagRegion),
 		GetEnv(flagAccountID),
-		GetEnv(flagAWSRegion),
+		//GetEnv(flagAWSRegion),
 	)
 }
 

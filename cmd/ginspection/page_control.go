@@ -27,7 +27,7 @@ func (p *PageControl) GetStatus(model *Model) {
 	cOne := model.COne()
 	for {
 		stop := InfiniteProgress(p.statusLabel)
-		status, err := cOne.GetInspectionBypassStatus(context.TODO())
+		status, err := cOne.GetInspectionBypassStatus(context.TODO(), model.config.AWSRegion)
 		stop()
 		if err != nil {
 			p.statusLabel.SetText(err.Error())
@@ -71,7 +71,7 @@ func (p *PageControl) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	controlFunc := func(action cone.Action) {
 		cOne := model.COne()
 		stop := InfiniteProgress(p.statusLabel)
-		err := cOne.SetInspectionBypass(context.TODO(), action)
+		err := cOne.SetInspectionBypass_(context.TODO(), model.config.AWSRegion, action)
 		stop()
 		if err != nil {
 			dialog.ShowError(err, win)
