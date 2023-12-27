@@ -26,7 +26,7 @@ func (p *PageControl) Name() string {
 func (p *PageControl) GetStatus(model *Model) {
 	cOne := model.COne()
 	for {
-		stop := InfiniteProgress(p.statusLabel)
+		stop := InfiniteProgressFunc(func(s string) { p.statusLabel.SetText(s) })
 		status, err := cOne.GetInspectionBypassStatus(context.TODO(), model.config.AWSRegion)
 		stop()
 		if err != nil {
@@ -70,8 +70,11 @@ func (p *PageControl) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	go p.GetStatus(model)
 	controlFunc := func(action cone.Action) {
 		cOne := model.COne()
-		stop := InfiniteProgress(p.statusLabel)
+		stop := InfiniteProgressFunc(func(s string) {
+			p.statusLabel.SetText(s)
+		})
 		err := cOne.SetInspectionBypass_(context.TODO(), model.config.AWSRegion, action)
+		//time.Sleep(3 * time.Second)
 		stop()
 		if err != nil {
 			dialog.ShowError(err, win)
@@ -102,9 +105,31 @@ func InfiniteProgressFunc(callback func(s string)) func() {
 		chars := `.oOo`
 		chars = `/-\|`
 		chars = ` booo dooo oboo odoo oobo oodo ooob oood oooq ooop ooqo oopo oqoo opoo qooo pooo`
-		chars = `      .     o     O     o     .`
+		//       123451234512345123451234512345123451234512345123451234512345
+		chars = `     .     o     O     o     .         .   o   O   o   .    `
+		// `'.,;"
+		// 1!iIl|][:;
+		// >-~<
+		//<v^>
+		//
+		//       123123123123123123
+		chars = `<      ^      >  v  `
 		size := 5
+		chars = `<   ^   > v `
+		size = 3
+		chars = `<^>v`
+		size = 1
+		chars = `->|<-<|>-`
+		size = 1
+		chars = "':,"
+		size = 1
+		//chars = "_\n'\nA_\n:\nA_\n,\nA"
+		//size = 5
+		chars = `[=----][-=---][--=--][---=-][----=][---=-][--=--][-=---]`
+		size = 7
+		//       12345123451234512345
 		i := 0
+		sleepTime := 200 * time.Millisecond
 		for {
 			select {
 			case <-stop:
@@ -115,7 +140,7 @@ func InfiniteProgressFunc(callback func(s string)) func() {
 				if i*size == len(chars) {
 					i = 0
 				}
-				time.Sleep(100 * time.Millisecond)
+				time.Sleep(sleepTime)
 			}
 		}
 	}()

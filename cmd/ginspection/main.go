@@ -1,10 +1,7 @@
 package main
 
 import (
-	"time"
-
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/widget"
 )
 
 // https://cloudone.trendmicro.com/docs/identity-and-account-management/c1-regions/
@@ -30,6 +27,7 @@ type Page interface {
 	AquireData(model *Model) error
 }
 
+/*
 func InfiniteProgress(label *widget.Label) func() {
 	stop := make(chan struct{})
 	go func() {
@@ -58,7 +56,7 @@ func InfiniteProgress(label *widget.Label) func() {
 	return func() {
 		stop <- struct{}{}
 	}
-}
+}*/
 
 func main() {
 	c := NewNSHIControl()
