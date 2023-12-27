@@ -12,8 +12,6 @@ import (
 )
 
 const (
-	//Title = `GInspection v0.0.1`
-
 	IntoText = "Trend Micro Cloud One Netwrok Security Hosted Infrastructure controlling utility. " +
 		"GInspection allows to turn on and off bypass mode for  Netwrok Security Hosted Infrastructure in given AWS region. " +
 		"You will need to have access to the Cloud One console to get Account ID and API Key."
@@ -57,9 +55,6 @@ func (p *PageIntro) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	version := fmt.Sprintf("Version %s", version.MajorMinorRevision)
 	versionLabel := widget.NewLabelWithStyle(version,
 		fyne.TextAlignCenter, fyne.TextStyle{})
-	_ = InfiniteProgressFunc(func(s string) {
-		versionLabel.SetText(s)
-	})
 
 	report := widget.NewRichTextFromMarkdown(IntoText)
 	report.Wrapping = fyne.TextWrapWord

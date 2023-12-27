@@ -27,12 +27,11 @@ func (p *PageOptions) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	p.accountIDEntry = widget.NewEntry()
 	p.accountIDEntry.Text = model.config.AccountID
 	p.accountIDEntry.Validator = ValidateAccountID
-	//p.accountIDEntry.PlaceHolder = "Go to Administration-Account Settings->ID"
 	accountIDFormItem := widget.NewFormItem("AccoutID:", p.accountIDEntry)
 	accountIDFormItem.HintText = "Go to Administration-Account Settings->ID"
 	p.apiKeyEntry = widget.NewPasswordEntry()
 	p.apiKeyEntry.Text = model.config.apiKeyDecrypted
-	p.apiKeyEntry.PlaceHolder = "" // "Go to Administration->API Keys->New"
+	p.apiKeyEntry.PlaceHolder = ""
 	apiKeyFormItem := widget.NewFormItem("API Key:", p.apiKeyEntry)
 	apiKeyFormItem.HintText = "Go to Administration->API Keys->New"
 

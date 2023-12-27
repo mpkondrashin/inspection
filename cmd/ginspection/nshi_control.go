@@ -51,6 +51,7 @@ func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 		}
 	}*/
 	if c.current == len(c.pages)-1 {
+		//nextButton = quitButton
 		nextButton.Disable()
 	}
 
