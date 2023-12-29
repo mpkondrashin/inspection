@@ -45,11 +45,19 @@ func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 	nextButton := widget.NewButtonWithIcon("Next", theme.NavigateNextIcon(), c.Next)
 	nextButton.IconPlacement = widget.ButtonIconTrailingText
 
-	/*nextButton.OnKeyDown = func(key *fyne.KeyEvent) {
+	/*	nextButton.OnKeyDown = func(key *fyne.KeyEvent) {
 		if key.Name == fyne.KeyReturn {
 			c.Next()
 		}
 	}*/
+	/*	enter := desktop.CustomShortcut{
+			KeyName: fyne.KeyReturn,
+		}
+		c.win.Canvas().AddShortcut(&enter, func(shortcut fyne.Shortcut) {
+			log.Println("We tapped Ctrl+Tab")
+			c.Next()
+		})
+	*/
 	if c.current == len(c.pages)-1 {
 		//nextButton = quitButton
 		nextButton.Disable()
@@ -60,7 +68,6 @@ func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 	bottom := container.NewVBox(widget.NewSeparator(), buttons)
 	_ = bottom
 
-	//return container.NewBorder(nil, bottom, nil, nil, l)
 	return container.NewBorder(nil, bottom, nil, nil, upper)
 }
 

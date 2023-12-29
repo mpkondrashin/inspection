@@ -22,13 +22,12 @@ func (p *PageOptions) Name() string {
 }
 
 func (p *PageOptions) Content(win fyne.Window, model *Model) fyne.CanvasObject {
-	labelTop := widget.NewLabel("Provide all nessesary options")
-
+	labelTop := widget.NewLabel("Provide all nessesary parameters")
 	p.accountIDEntry = widget.NewEntry()
 	p.accountIDEntry.Text = model.config.AccountID
 	p.accountIDEntry.Validator = ValidateAccountID
-	accountIDFormItem := widget.NewFormItem("AccoutID:", p.accountIDEntry)
-	accountIDFormItem.HintText = "Go to Administration-Account Settings->ID"
+	accountIDFormItem := widget.NewFormItem("Accout ID:", p.accountIDEntry)
+	accountIDFormItem.HintText = "Go to Administration->Account Settings->ID"
 	p.apiKeyEntry = widget.NewPasswordEntry()
 	p.apiKeyEntry.Text = model.config.apiKeyDecrypted
 	p.apiKeyEntry.PlaceHolder = ""
