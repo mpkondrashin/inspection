@@ -12,7 +12,7 @@ jobs:
           uses: actions/setup-go@v3
 
         - name: Build GInspection for Windows
-          run: go build ./cmd/ginspection
+          run: go build -ldflags "-H windowsgui" ./cmd/ginspection
         
         - name: Build Inspection for Windows
           run: go build ./cmd/inspection
