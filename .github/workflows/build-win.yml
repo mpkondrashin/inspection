@@ -17,8 +17,10 @@ jobs:
         - name: Install fyne
           run: go install fyne.io/fyne/v2/cmd/fyne@latest
           
+#        - name: Package
+ #         run: `(go env GOPATH)/bin/fyne" package --os windows --executable ginspection.exe --name GInspection  --appID in.kondrash --appVersion "${{ github.ref_name }}".substring(1)  --icon ./bin/icon.png --release`
         - name: Package
-          run: "(go env GOPATH)/bin/fyne" package --os windows --executable ginspection.exe --name GInspection  --appID in.kondrash --appVersion "${{ github.ref_name }}".substring(1)  --icon ./bin/icon.png --release
+          run: (go env GOPATH)/bin/fyne package --os windows --executable ginspection.exe --name GInspection --appID in.kondrash --appVersion ${{ github.ref_name }}.[1:] --icon ./bin/icon.png --release
 
         - name: Build Inspection for Windows
           run: go build ./cmd/inspection
