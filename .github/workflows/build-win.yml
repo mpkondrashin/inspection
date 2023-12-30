@@ -17,6 +17,9 @@ jobs:
         - name: Install fyne
           run: go install fyne.io/fyne/v2/cmd/fyne@latest
 
+        - name: Add Go to PATH
+          run: echo "::add-path::$(go env GOPATH)/bin"
+
         - name: Package
           run: fyne --os windows --executable ginspection.exe --name GInspection --appVersion ${{ github.ref_name }}  --icon ./bin/icon.png --release
 
