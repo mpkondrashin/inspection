@@ -17,6 +17,9 @@ jobs:
         - name: Test 1
           run: echo $GOPATH
 
+        - name: Test 3
+          run: echo "ABC $(go env GOPATH) DEF"
+
         - name: Install fyne
           run: go install fyne.io/fyne/v2/cmd/fyne@latest
           
