@@ -8,7 +8,7 @@ jobs:
       steps:
 
         - uses: actions/checkout@v4
-        
+
         - name: Set up Go
           uses: actions/setup-go@v3
 
@@ -21,13 +21,18 @@ jobs:
         - name: Test 3
           run: echo "ABC $(go env GOPATH) DEF"
 
+        - name: setup env
+          run: |
+            echo "::set-env name=GOPATH::$(go env GOPATH)"
+            echo "::add-path::$(go env GOPATH)/bin"
+
         - name: Install fyne
           run: go install fyne.io/fyne/v2/cmd/fyne@latest
-          
+        
 #        - name: Package
  #         run: `(go env GOPATH)\\bin\\fyne" package --os windows --executable ginspection.exe --name GInspection  --appID in.kondrash --appVersion "${{ github.ref_name }}".substring(1)  --icon ./bin/icon.png --release`
         - name: Package
-          run: "$(go env GOPATH)\\bin\\fyne package --os windows --executable ginspection.exe --name GInspection --appID in.kondrash --appVersion ${{ github.ref_name }}.[1:] --icon ./bin/icon.png --release"
+          run: fyne package --os windows --executable ginspection.exe --name GInspection --appID in.kondrash --appVersion ${{ github.ref_name }}.[1:] --icon ./bin/icon.png --release"
 
         - name: Build GInspection for Windows
           run: go build -ldflags "-H windowsgui" ./cmd/ginspection
