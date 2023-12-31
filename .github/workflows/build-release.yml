@@ -30,7 +30,7 @@ jobs:
         
         - name: Package
           if: startsWith(github.ref, 'refs/tags/') 
-          run: fyne package --os ${{ matrix.os }} --name GInspection --appID in.kondrash --appVersion "${{ github.ref_name }}".substring(1) --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
+          run: fyne package --os ${{ matrix.os }} --name GInspection --appID in.kondrash --appVersion  "${${{ github.ref_name }}:1}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
 
         - name: Get-ChildItem -Recurse
           if: matrix.os == 'windows'
