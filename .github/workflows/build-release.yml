@@ -41,13 +41,15 @@ jobs:
         - name: Assign variables macOS
           if: matrix.os == 'macos-latest'
           run: |
-            OS="debian"
+            OS="darwin"
       
         - name: Package
           if: startsWith(github.ref, 'refs/tags/') 
           run: |
             ref_name="${{ github.ref_name }}"
             version="${ref_name:1}"
+            echo ${version}
+            echo ${OS}
             fyne package --os ${OS} --name GInspection --appID in.kondrash --appVersion "${version}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
    
         - name: Get-ChildItem -Recurse
