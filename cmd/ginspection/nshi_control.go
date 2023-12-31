@@ -92,6 +92,10 @@ func (c *NSHIControl) Prev() {
 func NewNSHIControl() *NSHIControl {
 	c := &NSHIControl{
 		app: app.New(),
+		model: Model{
+			appName:  appName,
+			fileName: configFileName,
+		},
 	}
 	c.win = c.app.NewWindow("Network Security Inspect/Bypass Switch")
 	c.win.Resize(fyne.NewSize(600, 400))

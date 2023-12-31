@@ -2,11 +2,17 @@ package main
 
 import (
 	"crypto/sha1"
+	"errors"
 	"fmt"
 	"inspection/pkg/cone"
+	"os"
+	"path/filepath"
+	"runtime"
 )
 
 type Model struct {
+	appName  string
+	fileName string
 	password string
 	config   Configuration
 	hash     string
@@ -22,16 +28,25 @@ func (m *Model) CalculateHash() string {
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func (m *Model) Load(fileName string) error {
-	if err := m.config.Load(fileName, m.password); err != nil {
+func (m *Model) Load() error {
+	filePath, err := m.configFilePath()
+	if err != nil {
+		return err
+	}
+
+	if err := m.config.Load(filePath, m.password); err != nil {
 		return err
 	}
 	m.hash = m.CalculateHash()
 	return nil
 }
 
-func (m *Model) Save(fileName string) error {
-	if err := m.config.Save(fileName, m.password); err != nil {
+func (m *Model) Save() error {
+	filePath, err := m.configFilePath()
+	if err != nil {
+		return err
+	}
+	if err := m.config.Save(filePath, m.password); err != nil {
 		return err
 	}
 	m.hash = m.CalculateHash()
@@ -44,4 +59,43 @@ func (m *Model) Changed() bool {
 
 func (m *Model) COne() *cone.CloudOneNS {
 	return cone.NewCloudOneNS(m.config.apiKeyDecrypted, m.config.Region, m.config.AccountID)
+}
+
+func (m *Model) configFilePath() (string, error) {
+	folder, err := m.ConfigFileFolder()
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(folder, m.fileName), nil
+}
+
+var (
+	ErrNoUserProfile = errors.New("missing environment variable")
+	ErrUnsupportedOS = errors.New("unsupported OS")
+)
+
+func (m *Model) ConfigFileFolder() (string, error) {
+	if runtime.GOOS == "windows" {
+		return m.configFileFolder("USERPROFILE", "AppData\\Local")
+	}
+	if runtime.GOOS == "linux" {
+		return m.configFileFolder("HOME", ".config")
+	}
+	if runtime.GOOS == "darwin" {
+		return m.configFileFolder("HOME", "Library/Application Support")
+	}
+	return "", fmt.Errorf("%s: %w", runtime.GOOS, ErrUnsupportedOS)
+}
+
+func (m *Model) configFileFolder(profileVariable string, dir string) (string, error) {
+	userProfile := os.Getenv(profileVariable)
+	if userProfile == "" {
+		return "", fmt.Errorf("%s: %w", profileVariable, ErrNoUserProfile)
+	}
+	folder := filepath.Join(userProfile, dir, m.appName)
+	err := os.MkdirAll(folder, 0700)
+	if err != nil {
+		return "", err
+	}
+	return folder, nil
 }

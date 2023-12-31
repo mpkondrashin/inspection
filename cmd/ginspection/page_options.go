@@ -54,7 +54,7 @@ func (p *PageOptions) AquireData(model *Model) error {
 
 	model.config.Region = info.Region
 	if model.Changed() {
-		return model.Save(configFileName)
+		return model.Save()
 	}
 	return nil
 }

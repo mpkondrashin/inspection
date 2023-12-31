@@ -67,7 +67,7 @@ func (p *PageRegion) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 func (p *PageRegion) AquireData(model *Model) error {
 	model.config.AWSRegion = p.awsRegionList.Selected
 	if model.Changed() {
-		return model.Save(configFileName)
+		return model.Save()
 	}
 	return nil
 }
