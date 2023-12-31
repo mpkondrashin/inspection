@@ -120,6 +120,7 @@ const (
 	ProgressTypeFlipShort
 	ProgressTypeDrop
 	ProgressTypeRotWide
+	ProgressTypeX
 )
 
 var progressTypes = []progress{
@@ -178,6 +179,10 @@ var progressTypes = []progress{
 	{
 		chars: ` |  / --- \ `,
 		size:  3,
+	},
+	{
+		chars: `.-+x+-. `,
+		size:  1,
 	},
 }
 
