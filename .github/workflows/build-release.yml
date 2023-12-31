@@ -28,12 +28,27 @@ jobs:
         - name: Install fyne
           run: go install fyne.io/fyne/v2/cmd/fyne@latest
         
+        - name: Assign variables Linux
+          if: matrix.os == 'ubuntu-latest'
+          run: |
+            OS="linux"
+
+        - name: Assign variables Windows
+          if: matrix.os == 'windows-latest'
+          run: |
+            OS="windows"
+    
+        - name: Assign variables macOS
+          if: matrix.os == 'macos-latest'
+          run: |
+            OS="debian"
+      
         - name: Package
           if: startsWith(github.ref, 'refs/tags/') 
           run: |
             ref_name="${{ github.ref_name }}"
             version="${ref_name:1}"
-            fyne package --os ${{ matrix.os }} --name GInspection --appID in.kondrash --appVersion "${version}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
+            fyne package --os ${OS} --name GInspection --appID in.kondrash --appVersion "${version}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
    
         - name: Get-ChildItem -Recurse
           if: matrix.os == 'windows'
