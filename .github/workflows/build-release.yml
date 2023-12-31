@@ -52,29 +52,47 @@ jobs:
             fyne package --os darwin --name GInspection --appID in.kondrash --appVersion "${version}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
               
         - name: Get-ChildItem -Recurse
-          if: matrix.os == 'windows'
+          if: matrix.os == 'windows-latest'
           run: Get-ChildItem -Recurse
 
         - name: ls -lR
-          if: matrix.os == 'macos' || matrix.os == 'ubuntu'
+          if: matrix.os == 'macos-latest' || matrix.os == 'ubuntu-latest'
           run: ls -lR
 
         - name: Build Inspection
           run: go build ./cmd/inspection
     
         - name: Pack for Windows
-          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'windows'
-          run: Compress-Archive -Path bin/opengl32.dll, inspection.exe, cmd/ginspection/GInspection.exe, README.md, config_example.yaml -Destination inspection_${{ matrix.os }}_${{ github.ref_name }}.zip
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'windows-latest'
+          run: Compress-Archive -Path bin/opengl32.dll, inspection.exe, cmd/ginspection/GInspection.exe, README.md, config_example.yaml -Destination inspection_win64_${{ github.ref_name }}.zip
 
-        - name: Pack for Linux and macOS
-          if: startsWith(github.ref, 'refs/tags/') && (matrix.os == 'ubuntu' || matrix.os == 'macos')
-          run: zip inspection_${{ matrix.os }}_${{ github.ref_name }}.zip inspection cmd/ginspection/GInspection README.md config_example.yaml
+        - name: Pack for macOS
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'macos-latest'
+          run: zip inspection_macos_${{ github.ref_name }}.zip inspection cmd/ginspection/GInspection README.md config_example.yaml
 
-        - name: Release
+        - name: Pack for Linux 
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest' 
+          run: zip inspection_linux_${{ github.ref_name }}.zip inspection cmd/ginspection/GInspection README.md config_example.yaml
+
+        - name: Release for Windows
           uses: softprops/action-gh-release@v1
-          if: startsWith(github.ref, 'refs/tags/')
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'windows-latest'
           with:
             files: |
-              inspection_${{ matrix.os }}_${{ github.ref_name }}.zip
+              inspection_windows_${{ github.ref_name }}.zip
       
+        - name: Release for Linux
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest' 
+          with:
+            files: |
+              inspection_linux_${{ github.ref_name }}.zip
       
+        - name: Release
+          uses: softprops/action-gh-release@v1
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'macos-latest'
+          with:
+            files: |
+              inspection_macos_${{ github.ref_name }}.zip
+      
+    
