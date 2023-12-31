@@ -27,31 +27,28 @@ jobs:
 
         - name: Install fyne
           run: go install fyne.io/fyne/v2/cmd/fyne@latest
-        
-        - name: Assign variables Linux
-          if: matrix.os == 'ubuntu-latest'
-          run: |
-            echo "::set-env OS=linux"
-
-        - name: Assign variables Windows
-          if: matrix.os == 'windows-latest'
-          run: |
-            echo "::set-env OS=windows"
-    
-        - name: Assign variables macOS
-          if: matrix.os == 'macos-latest'
-          run: |
-            echo "::set-env OS: darwin"
       
-        - name: Package
-          if: startsWith(github.ref, 'refs/tags/') 
+        - name: Package Windows
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'windows-latest'
           run: |
             ref_name="${{ github.ref_name }}"
             version="${ref_name:1}"
-            echo ${version}
-            echo ${OS}
-            fyne package --os ${OS} --name GInspection --appID in.kondrash --appVersion "${version}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
-   
+            fyne package --os windows --name GInspection --appID in.kondrash --appVersion "${version}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
+
+        - name: Package Linux
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest'
+          run: |
+            ref_name="${{ github.ref_name }}"
+            version="${ref_name:1}"
+            fyne package --os linux --name GInspection --appID in.kondrash --appVersion "${version}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
+
+        - name: Package macOS
+          if: startsWith(github.ref, 'refs/tags/') && matrix.os == 'macos-latest'
+          run: |
+            ref_name="${{ github.ref_name }}"
+            version="${ref_name:1}"
+            fyne package --os darwin --name GInspection --appID in.kondrash --appVersion "${version}" --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
+              
         - name: Get-ChildItem -Recurse
           if: matrix.os == 'windows'
           run: Get-ChildItem -Recurse
