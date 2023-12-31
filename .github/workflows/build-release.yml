@@ -25,6 +25,10 @@ jobs:
           env:
             ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
+        - name: install required dependencies for Linux
+          if:  matrix.os == 'ubuntu-latest'
+          run: sudo apt-get install libgl1-mesa-dev xorg-dev
+
         - name: Install fyne
           run: go install fyne.io/fyne/v2/cmd/fyne@latest
       
