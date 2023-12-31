@@ -32,8 +32,8 @@ jobs:
           if: startsWith(github.ref, 'refs/tags/') 
           run: fyne package --os windows --name GInspection --appID in.kondrash --appVersion "${{ github.ref_name }}".substring(1) --icon ../../bin/icon.png --release --sourceDir ./cmd/ginspection
 
-        - name: ls -lR
-          run: ls -l -R
+        - name: Get-ChildItem -Recurse
+          run: Get-ChildItem -Recurse
 
         - name: Build Inspection for Windows
           run: go build ./cmd/inspection
