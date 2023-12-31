@@ -4,7 +4,7 @@ import (
 	"fyne.io/fyne/v2"
 )
 
-const configFileName = "config.yaml"
+const configFileName = "inspection.yaml"
 
 type Page interface {
 	Name() string
