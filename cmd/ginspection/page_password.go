@@ -1,10 +1,9 @@
 package main
 
 import (
-	"os"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -19,7 +18,15 @@ func (p *PagePassword) Name() string {
 }
 
 func (p *PagePassword) Content(win fyne.Window, model *Model) fyne.CanvasObject {
-	labelTop := widget.NewLabel("Provide password that will be used to encrypt/decrypt API key")
+	configExist, err := model.ConfigExists()
+	if err != nil {
+		dialog.ShowError(err, win)
+	}
+	labelText := "Provide password that will be used to encrypt API key"
+	if configExist {
+		labelText = "Provide password to decrypt API key"
+	}
+	labelTop := widget.NewLabel(labelText)
 	p.passwordEntry = widget.NewPasswordEntry()
 	p.passwordEntry.Text = model.password
 	p.passwordEntry.Validator = CheckPassword
@@ -34,10 +41,5 @@ func (p *PagePassword) AquireData(model *Model) error {
 		return err
 	}
 	model.password = p.passwordEntry.Text
-	err := model.config.Load(configFileName, model.password)
-
-	if err != nil && !os.IsNotExist(err) {
-		return err
-	}
-	return nil
+	return model.LoadConfig()
 }

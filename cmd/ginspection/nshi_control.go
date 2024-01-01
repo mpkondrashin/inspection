@@ -99,7 +99,7 @@ func NewNSHIControl() *NSHIControl {
 	}
 	c.win = c.app.NewWindow("Network Security Inspect/Bypass Switch")
 	c.win.Resize(fyne.NewSize(600, 400))
-	c.win.SetFixedSize(true)
+	//c.win.SetFixedSize(true)
 	c.win.SetMaster()
 	c.pages = []Page{
 		&PageIntro{},

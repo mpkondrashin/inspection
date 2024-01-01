@@ -18,6 +18,33 @@ type Model struct {
 	hash     string
 }
 
+func (m *Model) ConfigExists() (bool, error) {
+	path, err := m.configFilePath()
+	if err != nil {
+		return false, err
+	}
+	_, err = os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
+}
+
+func (m *Model) LoadConfig() error {
+	filePath, err := m.configFilePath()
+	if err != nil {
+		return err
+	}
+	err = m.config.Load(filePath, m.password)
+	if err != nil && !os.IsNotExist(err) {
+		return err
+	}
+	return nil
+}
+
 func (m *Model) CalculateHash() string {
 	h := sha1.New()
 	h.Write([]byte(m.password))
