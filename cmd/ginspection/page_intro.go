@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"inspection/pkg/version"
 	"net/url"
 
 	"fyne.io/fyne/v2"
@@ -52,7 +51,7 @@ func (p *PageIntro) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	titleLabel := widget.NewLabelWithStyle("GInspection",
 		fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 
-	version := fmt.Sprintf("Version %s", version.MajorMinorRevision)
+	version := fmt.Sprintf("Version %s", MajorMinorRevision)
 	versionLabel := widget.NewLabelWithStyle(version,
 		fyne.TextAlignCenter, fyne.TextStyle{})
 
