@@ -51,7 +51,7 @@ func (p *PageIntro) Content(win fyne.Window, model *Model) fyne.CanvasObject {
 	titleLabel := widget.NewLabelWithStyle("GInspection",
 		fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
 
-	version := fmt.Sprintf("Version %s", MajorMinorRevision)
+	version := fmt.Sprintf("Version %s", MajorMinorRevision[1:])
 	versionLabel := widget.NewLabelWithStyle(version,
 		fyne.TextAlignCenter, fyne.TextStyle{})
 
