@@ -6,6 +6,7 @@ package cone
 
 import (
     "encoding/json"
+ "encoding/xml"
     "errors"
     "fmt"
     "strconv"
@@ -74,3 +75,25 @@ func (s *Action) UnmarshalYAML(unmarshal func(interface{}) error) error {
     *s = result
     return nil
 }
+
+
+// MarshalXML implements the Marshaler interface of the xml package for Action.
+func (s Action)  MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+ return e.EncodeElement(s.String(), start)
+}
+
+// UnmarshalXML implements the Unmarshaler interface of the xml package for Action.
+func (s *Action) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+ var v string
+ err := d.DecodeElement(&v, &start)
+ if err != nil {
+  return err
+ }
+ result, ok := mapActionFromString[strings.ToLower(v)]  
+    if !ok {
+        return fmt.Errorf("%w: %s", ErrUnknownAction, v)
+    }
+ *s = result
+ return nil
+}
+
