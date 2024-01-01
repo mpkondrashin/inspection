@@ -3,6 +3,7 @@ package main
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
@@ -18,8 +19,14 @@ type NSHIControl struct {
 	model   Model
 }
 
+//go:generate fyne bundle --name IconSVGResource --output resource.go   ../../bin/icon.svg
+
 func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 	left := container.NewVBox()
+	image := canvas.NewImageFromResource(IconSVGResource)
+	image.SetMinSize(fyne.NewSize(52, 52))
+	image.FillMode = canvas.ImageFillContain
+	left.Add(image)
 	for _, page := range c.pages {
 		if page == p {
 			left.Add(widget.NewLabelWithStyle("▶ "+page.Name(), fyne.TextAlignLeading, fyne.TextStyle{Bold: true}))
@@ -29,12 +36,7 @@ func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 	}
 
 	middle := container.NewPadded(container.NewVBox(layout.NewSpacer(), p.Content(c.win, &c.model), layout.NewSpacer()))
-	//_ = middle
-	//l := widget.NewLabel("middle := container.New(layout.NewCenterLayout(), p.Content(c.win, &c.model))")
-	//l.Wrapping = fyne.TextWrapWord
 
-	//upper := container.NewHBox(left, widget.NewSeparator(), middle)
-	//left := container.NewHBox(left, widget.NewSeparator(), l)
 	upper := container.NewBorder(nil, nil, container.NewHBox(left, widget.NewSeparator()), nil, middle)
 	quitButton := widget.NewButtonWithIcon("Quit", theme.CancelIcon(), c.Quit)
 	prevButton := widget.NewButtonWithIcon("Back", theme.NavigateBackIcon(), c.Prev)
@@ -45,21 +47,7 @@ func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 	nextButton := widget.NewButtonWithIcon("Next", theme.NavigateNextIcon(), c.Next)
 	nextButton.IconPlacement = widget.ButtonIconTrailingText
 
-	/*	nextButton.OnKeyDown = func(key *fyne.KeyEvent) {
-		if key.Name == fyne.KeyReturn {
-			c.Next()
-		}
-	}*/
-	/*	enter := desktop.CustomShortcut{
-			KeyName: fyne.KeyReturn,
-		}
-		c.win.Canvas().AddShortcut(&enter, func(shortcut fyne.Shortcut) {
-			log.Println("We tapped Ctrl+Tab")
-			c.Next()
-		})
-	*/
 	if c.current == len(c.pages)-1 {
-		//nextButton = quitButton
 		nextButton.Disable()
 	}
 
@@ -68,7 +56,7 @@ func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 	bottom := container.NewVBox(widget.NewSeparator(), buttons)
 	_ = bottom
 
-	return container.NewBorder(nil, bottom, nil, nil, upper)
+	return container.NewBorder(nil, container.NewPadded(bottom), nil, nil, upper)
 }
 
 func (c *NSHIControl) Quit() {

@@ -22,9 +22,9 @@ func (p *PagePassword) Content(win fyne.Window, model *Model) fyne.CanvasObject 
 	if err != nil {
 		dialog.ShowError(err, win)
 	}
-	labelText := "Provide password that will be used to encrypt API key"
+	labelText := "Please provide password that will be used to encrypt API key"
 	if configExist {
-		labelText = "Provide password to decrypt API key"
+		labelText = "Please provide password to decrypt API key"
 	}
 	labelTop := widget.NewLabel(labelText)
 	p.passwordEntry = widget.NewPasswordEntry()

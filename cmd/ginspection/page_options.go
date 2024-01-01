@@ -22,7 +22,7 @@ func (p *PageOptions) Name() string {
 }
 
 func (p *PageOptions) Content(win fyne.Window, model *Model) fyne.CanvasObject {
-	labelTop := widget.NewLabel("Provide all nessesary parameters")
+	labelTop := widget.NewLabel("Please open Cloud One console to get all nessesary parameters")
 	p.accountIDEntry = widget.NewEntry()
 	p.accountIDEntry.Text = model.config.AccountID
 	p.accountIDEntry.Validator = ValidateAccountID
