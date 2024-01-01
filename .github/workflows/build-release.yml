@@ -33,7 +33,7 @@ jobs:
           if: startsWith(github.ref, 'refs/tags/')
           run: |
             go build ./cmd/genver
-            ./genver cmd/ginspection ${{ github.ref_name }}
+            ./genver cmd/ginspection/version.go ${{ github.ref_name }}
 
         - name: Install fyne
           run: go install fyne.io/fyne/v2/cmd/fyne@latest
