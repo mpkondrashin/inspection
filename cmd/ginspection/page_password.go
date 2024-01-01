@@ -31,7 +31,9 @@ func (p *PagePassword) Content(win fyne.Window, model *Model) fyne.CanvasObject 
 	p.passwordEntry.Text = model.password
 	p.passwordEntry.Validator = CheckPassword
 	passwordFormItem := widget.NewFormItem("Password:", p.passwordEntry)
-	passwordFormItem.HintText = "At least 8 characters, upper/lower case, digits and special characters"
+	if !configExist {
+		passwordFormItem.HintText = "At least 8 characters, upper/lower case, digits and special characters"
+	}
 	passwordForm := widget.NewForm(passwordFormItem)
 	return container.NewVBox(labelTop, passwordForm)
 }
