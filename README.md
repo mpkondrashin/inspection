@@ -23,7 +23,15 @@ sudo xattr -r -d com.apple.quarantine  GInspection.app
 <p align="center">
 <kbd><img src="bin/page_0.png" width="600px"/></kbd>
 </p>
+<p align="center">
 On introduction screen press "Next" button.
+</p>
+<p align="center">
+<kbd><img src="bin/page_1.png" width="600px"/></kbd>
+</p>
+<p align="center">
+Provide password that will be used to encrypt/decrypt saved Cloud One API key.
+</p>
 
 ### Get required configuration parameters
 To use Inspection utility you will need to get values of several parameters:
