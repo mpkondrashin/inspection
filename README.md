@@ -7,6 +7,22 @@ For network issues diagnostic, it is very often needed to temporary turn off IPS
 <img src="https://open.bccampus.ca/wp-content/uploads/2019/03/CC-BY.png"/> Code is released under [CC BY license](https://creativecommons.org/licenses/by/4.0/)
 
 ## Usage 
+Inspection offers following options to control Network Security Hosted Infrastructure bypass mode:
+1. GUI application GInspection
+2. CLI utility
+3. AWS Lambda function
+
+## GInspection
+
+To run GInspection download [the latest release](https://github.com/mpkondrashin/inspection/releases/latest) of ```GIspection``` executable for your platform and run it.
+
+**Note:** GInspection is not signed, so for macOS one of the solutions to open folder with GInspection and run following command:
+```commandline
+sudo xattr -r -d com.apple.quarantine  GInspection.app
+```
+
+<img srg="bin/page_0.png"/>
+On introduction screen press "Next" button.
 
 ### Get required configuration parameters
 To use Inspection utility you will need to get values of several parameters:

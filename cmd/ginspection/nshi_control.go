@@ -1,26 +1,94 @@
 package main
 
 import (
+	"fmt"
+	"image/png"
+	"log"
+	"os"
+	"path/filepath"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
+	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
-type NSHIControl struct {
-	pages   []Page
-	current int
-	app     fyne.App
-	win     fyne.Window
-	model   Model
-}
-
 //go:generate fyne bundle --name IconSVGResource --output resource.go   ../../bin/icon.svg
 
+type NSHIControl struct {
+	pages          []Page
+	current        int
+	app            fyne.App
+	win            fyne.Window
+	model          Model
+	capturesFolder string
+}
+
+func NewNSHIControl(capturesFolder string) *NSHIControl {
+	c := &NSHIControl{
+		app:            app.NewWithID(appID),
+		capturesFolder: capturesFolder,
+		model: Model{
+			appName:  appName,
+			fileName: configFileName,
+		},
+	}
+	c.win = c.app.NewWindow("Network Security Inspect/Bypass Switch")
+	c.win.Resize(fyne.NewSize(600, 400))
+	//c.win.SetFixedSize(true)
+	c.win.SetMaster()
+	c.pages = []Page{
+		&PageIntro{},
+		&PagePassword{},
+		&PageOptions{},
+		&PageRegion{},
+		&PageControl{},
+	}
+	prtScr := &desktop.CustomShortcut{KeyName: fyne.KeyI, Modifier: fyne.KeyModifierControl}
+	c.win.Canvas().AddShortcut(prtScr, c.captureWindowContents)
+	c.win.SetContent(c.Window(c.pages[0]))
+	return c
+}
+
+func (c *NSHIControl) captureWindowContents(shortcut fyne.Shortcut) {
+	if c.capturesFolder == "" {
+		log.Println("--capture is not set")
+		return
+	}
+	fileName := fmt.Sprintf("page_%d.png", c.current)
+	filePath := filepath.Join(c.capturesFolder, fileName)
+	f, err := os.Create(filePath)
+	if err != nil {
+		dialog.ShowError(err, c.win)
+		return
+	}
+	defer f.Close()
+	image := c.win.Canvas().Capture()
+	if err := png.Encode(f, image); err != nil {
+		dialog.ShowError(err, c.win)
+		return
+
+	}
+}
+
+/*
+// DELETE
+
+	func (c *NSHIControl) SaveScreenShots() {
+		time.Sleep(1 * time.Second)
+		for c.current = 0; c.current < len(c.pages); c.current++ {
+			c.win.SetContent(c.Window(c.pages[c.current]))
+			c.win.Show()
+			c.CaptureImage()
+			time.Sleep(1 * time.Second)
+		}
+	}
+*/
 func (c *NSHIControl) Window(p Page) fyne.CanvasObject {
 	left := container.NewVBox()
 	image := canvas.NewImageFromResource(IconSVGResource)
@@ -72,32 +140,10 @@ func (c *NSHIControl) Next() {
 	c.current++
 	c.win.SetContent(c.Window(c.pages[c.current]))
 }
+
 func (c *NSHIControl) Prev() {
 	c.current--
 	c.win.SetContent(c.Window(c.pages[c.current]))
-}
-
-func NewNSHIControl() *NSHIControl {
-	c := &NSHIControl{
-		app: app.New(),
-		model: Model{
-			appName:  appName,
-			fileName: configFileName,
-		},
-	}
-	c.win = c.app.NewWindow("Network Security Inspect/Bypass Switch")
-	c.win.Resize(fyne.NewSize(600, 400))
-	//c.win.SetFixedSize(true)
-	c.win.SetMaster()
-	c.pages = []Page{
-		&PageIntro{},
-		&PagePassword{},
-		&PageOptions{},
-		&PageRegion{},
-		&PageControl{},
-	}
-	c.win.SetContent(c.Window(c.pages[0]))
-	return c
 }
 
 func (c *NSHIControl) Run() {
