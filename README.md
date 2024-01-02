@@ -21,7 +21,7 @@ To run GInspection download [the latest release](https://github.com/mpkondrashin
 sudo xattr -r -d com.apple.quarantine  GInspection.app
 ```
 
-<img  style="border: 1px solid black;" src="bin/page_0.png" width="600"/>
+<img  style="border: 1px solid black; padding: 3px; margin: 5px;" src="bin/page_0.png" width="600"/>
 On introduction screen press "Next" button.
 
 ### Get required configuration parameters
