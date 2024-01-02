@@ -8,7 +8,7 @@ For network issues diagnostic, it is very often needed to temporary turn off IPS
 
 ## Usage 
 Inspection offers following options to control Network Security Hosted Infrastructure bypass mode:
-1. GUI application ```GInspection```
+1. GUI application ```GInspection```  <a href="#GInspection">GInspection</a>
 2. CLI utility ```inspection```
 3. AWS Lambda function
 
@@ -38,6 +38,19 @@ Provide password that will be used to encrypt/decrypt saved Cloud One API key.
 <p align="center">
 Open Cloud One console to get required parameters.
 </p>
+<p align="center">
+<kbd><img src="bin/page_3.png" width="600px"/></kbd>
+</p>
+<p align="center">
+Pick the AWS region you wnt to control bypass mode.
+</p>
+<p align="center">
+<kbd><img src="bin/page_4.png" width="600px"/></kbd>
+</p>
+<p align="center">
+Push "bypass" button to cancel all Network Security inspection. Push "Inspect" button to return Network Security to its normal operation</p>
+
+## Inspection CLI Utility
 
 ### Get required configuration parameters
 To use Inspection utility you will need to get values of several parameters:
@@ -49,11 +62,6 @@ To use Inspection utility you will need to get values of several parameters:
 For Cloud One **Region** and **Account ID** open [Cloud One console](https://cloudone.trendmicro.com/home) scroll page to the bottom and click "Administration". On the Account Settings page look for **ID** and **Region** values:
 
 <img src="images/administration.png?raw=true" width="90%" height="90%"/>
-
-region 1576
-nshi 852
-newkey 1032
-apikeys 834
 
 For Cloud One **API Key**, go to API Keys and push "New" button:
 
