@@ -8,7 +8,7 @@ For network issues diagnostic, it is very often needed to temporary turn off IPS
 
 ## Usage 
 Inspection offers following options to control Network Security Hosted Infrastructure bypass mode:
-1. [GUI application GInspection](#GInspection")
+1. [GUI application GInspection](#ginspection")
 2. [Inspection CLI Utility](#Inspection-CLI-Utility)
 3. [AWS Lambda function](#Use-as-AWS-Lambda)
 
