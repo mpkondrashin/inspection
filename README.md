@@ -1,4 +1,4 @@
-<img src="bin/page_0.png" alt="your-image-description" style="border: 2px solid  gray;">
+<kbd><img src="bin/page_0.png" alt="your-image-description"></<kbd>
 
 # Inspection
 
