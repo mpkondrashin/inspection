@@ -1,3 +1,5 @@
+<img src="bin/page_0.png" alt="your-image-description" style="border: 2px solid  gray;">
+
 # Inspection
 
 Control Trend Micro Cloud One Network Security Hosted Infrastructure inspection on AWS.
@@ -21,7 +23,6 @@ To run GInspection download [the latest release](https://github.com/mpkondrashin
 sudo xattr -r -d com.apple.quarantine  GInspection.app
 ```
 
-<img src="bin/page_0.png" alt="your-image-description" style="border: 2px solid  gray;">
 
 <img style="width: 600px; border: 5px solid #000; padding: 3px; margin: 5px;" src="bin/page_0.png"/>
 On introduction screen press "Next" button.
