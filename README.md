@@ -8,8 +8,8 @@ For network issues diagnostic, it is very often needed to temporary turn off IPS
 
 ## Usage 
 Inspection offers following options to control Network Security Hosted Infrastructure bypass mode:
-1. GUI application GInspection
-2. CLI utility
+1. GUI application ```GInspection```
+2. CLI utility ```inspection```
 3. AWS Lambda function
 
 ## GInspection
@@ -31,6 +31,12 @@ On introduction screen press "Next" button.
 </p>
 <p align="center">
 Provide password that will be used to encrypt/decrypt saved Cloud One API key.
+</p>
+<p align="center">
+<kbd><img src="bin/page_2.png" width="600px"/></kbd>
+</p>
+<p align="center">
+Open Cloud One console to get required parameters.
 </p>
 
 ### Get required configuration parameters
