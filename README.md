@@ -3,7 +3,7 @@
 Control Trend Micro Cloud One Network Security Hosted Infrastructure inspection on AWS.
 
 <p>
-<img src="bin/icon.svg" width="128" align="left"> For network issues diagnostic, it is very often needed to temporary turn off IPS inspection. For Trend Micro Cloud One Network Security Hosted Infrastructure, this option is not available on the management console. Inspection offers this ability as a command line utility.</p>
+<img src="bin/icon.svg" width="120" align="left"> For network issues diagnostic, it is very often needed to temporary turn off IPS inspection. For Trend Micro Cloud One Network Security Hosted Infrastructure, this option is not available on the management console. Inspection offers this ability as a command line utility.</p>
 
 
 <img src="https://open.bccampus.ca/wp-content/uploads/2019/03/CC-BY.png"/> Code is released under [CC BY license](https://creativecommons.org/licenses/by/4.0/)
