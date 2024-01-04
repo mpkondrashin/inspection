@@ -2,6 +2,7 @@
 
 Control Trend Micro Cloud One Network Security Hosted Infrastructure inspection on AWS.
 
+<img src="bin/icon.svg" width="132" class="leftimg">
 For network issues diagnostic, it is very often needed to temporary turn off IPS inspection. For Trend Micro Cloud One Network Security Hosted Infrastructure, this option is not available on the management console. Inspection offers this ability as a command line utility.
 
 <img src="https://open.bccampus.ca/wp-content/uploads/2019/03/CC-BY.png"/> Code is released under [CC BY license](https://creativecommons.org/licenses/by/4.0/)
@@ -16,39 +17,20 @@ Inspection offers following options to control Network Security Hosted Infrastru
 
 To run GInspection download [the latest release](https://github.com/mpkondrashin/inspection/releases/latest) of ```GIspection``` executable for your platform and run it.
 
-**Note:** GInspection is not signed, so for macOS one of the solutions to open folder with GInspection and run following command:
+**Note:** GInspection is not signed, so for macOS one of the solutions to run it to use terminal and run following command:
 ```commandline
 sudo xattr -r -d com.apple.quarantine  GInspection.app
 ```
-<p align="center">
-<kbd><img src="bin/page_0.png" width="600px"/></kbd>
-</p>
-<p align="center">
-On introduction screen press "Next" button.
-</p>
-<p align="center">
-<kbd><img src="bin/page_1.png" width="600px"/></kbd>
-</p>
-<p align="center">
-Provide password that will be used to encrypt/decrypt saved Cloud One API key.
-</p>
-<p align="center">
-<kbd><img src="bin/page_2.png" width="600px"/></kbd>
-</p>
-<p align="center">
-Open Cloud One console to get required parameters.
-</p>
-<p align="center">
-<kbd><img src="bin/page_3.png" width="600px"/></kbd>
-</p>
-<p align="center">
-Pick the AWS region you wnt to control bypass mode.
-</p>
-<p align="center">
-<kbd><img src="bin/page_4.png" width="600px"/></kbd>
-</p>
-<p align="center">
-Push "bypass" button to cancel all Network Security inspection. Push "Inspect" button to return Network Security to its normal operation</p>
+<p align="center"><kbd><img src="bin/page_0.png" width="600px"/></kbd></p>
+<p align="center">On introduction screen press "Next" button.</p>
+<p align="center"><kbd><img src="bin/page_1.png" width="600px"/></kbd></p>
+<p align="center">Provide password that will be used to encrypt/decrypt saved Cloud One API key.</p>
+<p align="center"><kbd><img src="bin/page_2.png" width="600px"/></kbd></p>
+<p align="center">Open Cloud One console to get required parameters (see below).</p>
+<p align="center"><kbd><img src="bin/page_3.png" width="600px"/></kbd></p>
+<p align="center">Pick the AWS region in which you want to control bypass mode. GInspection is detecting regions with deployed NSHI and picks one of them.</p>
+<p align="center"><kbd><img src="bin/page_4.png" width="600px"/></kbd></p>
+<p align="center">Push "bypass" button to cancel all Network Security inspection. Push "Inspect" button to return Network Security to its normal operation.</p>
 
 ## Inspection CLI Utility
 
